@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninja Apps - Hub de Aplicações</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 960px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header h1 span {
+            font-size: 3.5rem;
+            vertical-align: middle;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.1rem;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .app-card {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-content {
+            background: #fff;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 25px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .app-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .card-description {
+            font-size: 1rem;
+            color: #718096;
+            line-height: 1.6;
+            flex-grow: 1; /* Faz a descrição ocupar o espaço disponível */
+            margin-bottom: 20px;
+        }
+
+        .card-link {
+            font-weight: 600;
+            color: #667eea;
+            display: inline-block;
+            align-self: flex-start; /* Alinha o link no início do eixo transversal */
+        }
+        
+        .card-link span {
+            transition: transform 0.2s ease-in-out;
+            display: inline-block;
+        }
+        
+        .app-card:hover .card-link span {
+            transform: translateX(4px);
+        }
+
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1><span>🥷</span> Ninja Apps</h1>
+            <p>Um hub central de aplicações web úteis e eficientes.</p>
+        </header>
+
+        <main class="app-grid">
+            <a href="forma_devs.html" class="app-card">
+                <div class="card-content">
+                    <div class="card-icon">👥</div>
+                    <h2 class="card-title">FormaDevs</h2>
+                    <p class="card-description">
+                        Um sorteador inteligente para criar grupos de participantes de forma rápida e customizável. Perfeito para aulas, eventos e equipes.
+                    </p>
+                    <div class="card-link">Acessar Ferramenta <span>→</span></div>
+                </div>
+            </a>
+
+            <a href="llm_gpu_selector.html" class="app-card">
+                <div class="card-content">
+                    <div class="card-icon">🚀</div>
+                    <h2 class="card-title">Seletor LLM por Hardware</h2>
+                    <p class="card-description">
+                        Descubra quais modelos de linguagem (LLMs) são compatíveis com sua GPU NVIDIA ou Mac Apple Silicon. Filtre por hardware e veja as opções.
+                    </p>
+                    <div class="card-link">Verificar Compatibilidade <span>→</span></div>
+                </div>
+            </a>
+            
+            </main>
+    </div>
+
+</body>
+</html>
