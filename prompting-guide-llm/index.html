@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Técnicas de Prompting para LLMs - 2025</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <h1 class="header__title">
+                    🤖 Técnicas de Prompting para LLMs
+                    <span class="header__subtitle">Guia Completo 2025</span>
+                </h1>
+                <nav class="tab-navigation">
+                    <button class="tab-btn active" data-tab="techniques">
+                        📝 Técnicas
+                    </button>
+                    <button class="tab-btn" data-tab="domains">
+                        🎯 Domínios
+                    </button>
+                    <button class="tab-btn" data-tab="comparison">
+                        📊 Comparação
+                    </button>
+                    <button class="tab-btn" data-tab="generator">
+                        ⚡ Gerador
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <!-- Técnicas Tab -->
+                <section id="techniques" class="tab-content active">
+                    <div class="section-header">
+                        <h2>Técnicas de Prompting</h2>
+                        <p>Explore as principais técnicas para maximizar o desempenho de LLMs</p>
+                    </div>
+                    
+                    <!-- Filters and Search -->
+                    <div class="controls">
+                        <div class="search-container">
+                            <input type="text" id="search-input" class="form-control search-input" placeholder="🔍 Buscar técnicas...">
+                        </div>
+                        <div class="filters">
+                            <select id="complexity-filter" class="form-control filter-select">
+                                <option value="">Todas as Complexidades</option>
+                                <option value="Baixa">Baixa</option>
+                                <option value="Média">Média</option>
+                                <option value="Alta">Alta</option>
+                                <option value="Muito Alta">Muito Alta</option>
+                            </select>
+                            <select id="efficiency-filter" class="form-control filter-select">
+                                <option value="">Todas as Eficiências</option>
+                                <option value="Baixa">Baixa</option>
+                                <option value="Média">Média</option>
+                                <option value="Alta">Alta</option>
+                                <option value="Muito Alta">Muito Alta</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Techniques Grid -->
+                    <div class="techniques-grid" id="techniques-grid">
+                        <!-- Techniques will be populated here -->
+                    </div>
+                </section>
+
+                <!-- Domínios Tab -->
+                <section id="domains" class="tab-content">
+                    <div class="section-header">
+                        <h2>Domínios de Aplicação</h2>
+                        <p>Descubra como aplicar técnicas de prompting em diferentes áreas</p>
+                    </div>
+                    
+                    <div class="domains-grid" id="domains-grid">
+                        <!-- Domains will be populated here -->
+                    </div>
+                </section>
+
+                <!-- Comparação Tab -->
+                <section id="comparison" class="tab-content">
+                    <div class="section-header">
+                        <h2>Comparação Avançada</h2>
+                        <p>Compare técnicas lado a lado com visualizações interativas</p>
+                    </div>
+                    
+                    <div class="comparison-container">
+                        <div class="technique-selector">
+                            <h3>Selecione técnicas para comparar:</h3>
+                            <div class="technique-checkboxes" id="technique-checkboxes">
+                                <!-- Checkboxes will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="comparison-results">
+                            <div class="radar-chart-container">
+                                <h3>Visualização Radar</h3>
+                                <img src="https://pplx-res.cloudinary.com/image/upload/v1750447274/pplx_code_interpreter/c3b3df20_dbhwbi.jpg" alt="Gráfico Radar - Comparação de Técnicas" class="radar-chart">
+                            </div>
+                            
+                            <div class="comparison-table-container">
+                                <h3>Tabela Comparativa</h3>
+                                <div class="table-wrapper">
+                                    <table class="comparison-table" id="comparison-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Técnica</th>
+                                                <th>Complexidade</th>
+                                                <th>Precisão</th>
+                                                <th>Eficiência</th>
+                                                <th>Uso de Tokens</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="comparison-table-body">
+                                            <!-- Table rows will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Gerador Tab -->
+                <section id="generator" class="tab-content">
+                    <div class="section-header">
+                        <h2>Gerador de Prompts</h2>
+                        <p>Crie prompts personalizados com base nas melhores práticas</p>
+                    </div>
+                    
+                    <div class="generator-container">
+                        <div class="generator-form">
+                            <div class="form-group">
+                                <label class="form-label">Selecione a Técnica:</label>
+                                <select id="technique-select" class="form-control">
+                                    <option value="">Escolha uma técnica...</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Tipo de Tarefa:</label>
+                                <select id="task-type" class="form-control">
+                                    <option value="">Selecione o tipo...</option>
+                                    <option value="Análise de texto">Análise de texto</option>
+                                    <option value="Geração de conteúdo">Geração de conteúdo</option>
+                                    <option value="Resolução de problemas">Resolução de problemas</option>
+                                    <option value="Classificação">Classificação</option>
+                                    <option value="Tradução">Tradução</option>
+                                    <option value="Resumo">Resumo</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Contexto/Descrição:</label>
+                                <textarea id="context-input" class="form-control" rows="3" placeholder="Descreva o contexto ou detalhes específicos da sua tarefa..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Papel/Especialização (opcional):</label>
+                                <input type="text" id="role-input" class="form-control" placeholder="Ex: especialista em marketing, professor, analista...">
+                            </div>
+                            
+                            <button id="generate-btn" class="btn btn--primary btn--full-width">
+                                ⚡ Gerar Prompt
+                            </button>
+                        </div>
+                        
+                        <div class="generator-output">
+                            <div class="output-header">
+                                <h3>Prompt Gerado:</h3>
+                                <button id="copy-btn" class="btn btn--secondary" style="display: none;">
+                                    📋 Copiar
+                                </button>
+                            </div>
+                            <div id="generated-prompt" class="generated-prompt">
+                                <p class="placeholder-text">Configure os parâmetros acima e clique em "Gerar Prompt" para ver o resultado.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Tooltip -->
+    <div id="tooltip" class="tooltip"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
