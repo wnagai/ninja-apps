@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteador de Grupos - ECOI2202</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex; 
+            /* align-items: center; */ /* Alterado para resolver problema de visualização do topo */
+            align-items: flex-start; /* Garante que o container comece no topo da área flex (após o padding do body) */
+            justify-content: center; 
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%; /* Garante que o container use o espaço disponível */
+            margin: 0 auto; /* Embora justify-content:center faça a centralização horizontal, manter margin auto não prejudica e é uma prática comum */
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden; /* Controla o conteúdo interno do container */
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: -1px;
+        }
+        
+        .main-content { 
+            padding: 30px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 20px;
+            margin-bottom: 40px;
+        }
+
+        .welcome-section h2 {
+            color: #2d3748;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .welcome-section p {
+            color: #718096;
+            font-size: 1.1em;
+            margin: 0;
+        }
+
+        .data-input-section {
+            margin-bottom: 40px;
+        }
+
+        .data-input-section h3 {
+            text-align: center;
+            color: #2d3748;
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .data-source-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .data-option {
+            display: flex;
+            align-items: center;
+            padding: 25px;
+            border: 3px solid #e2e8f0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            position: relative;
+        }
+
+        .data-option:hover {
+            border-color: #4facfe;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.2);
+        }
+
+        .data-option.active {
+            border-color: #4facfe;
+            background: #f0f9ff;
+        }
+
+        .data-option input[type="radio"] {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            accent-color: #4facfe;
+        }
+
+        .option-icon {
+            font-size: 2.5em;
+            margin-right: 20px;
+        }
+
+        .option-content h4 {
+            margin: 0 0 5px 0;
+            color: #2d3748;
+            font-size: 1.2em;
+        }
+
+        .option-content p {
+            margin: 0;
+            color: #718096;
+            font-size: 0.95em;
+        }
+
+        .students-info {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 50%, #81e6d9 100%);
+            border: 2px solid #38b2ac;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .students-count {
+            font-size: 2em;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 5px;
+        }
+
+        .students-status {
+            color: #2c7a7b;
+            font-size: 1em;
+        }
+
+        .input-section {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            display: none; 
+            transition: all 0.3s ease;
+        }
+
+        .input-section.active {
+            display: block; 
+            border-color: #4facfe; 
+            box-shadow: 0 4px 20px rgba(79, 172, 254, 0.1);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .section-header h3 {
+            color: #2d3748;
+            font-size: 1.4em;
+            margin-bottom: 8px;
+        }
+
+        .section-header p {
+            color: #718096;
+            margin: 0;
+        }
+
+        .file-upload-area {
+            border: 3px dashed #cbd5e0;
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+            margin-bottom: 20px;
+        }
+
+        .file-upload-area:hover {
+            border-color: #22c55e;
+            background: #f0fdf4;
+        }
+
+        .file-upload-area.dragover {
+            border-color: #22c55e;
+            background: #dcfce7;
+        }
+
+        .upload-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            color: #9ca3af; 
+        }
+        .file-upload-area:hover .upload-icon,
+        .file-upload-area.dragover .upload-icon {
+            color: #22c55e; 
+        }
+
+
+        .upload-text {
+            font-size: 1.1em;
+            color: #374151;
+            margin-bottom: 10px;
+        }
+
+        .upload-hint {
+            font-size: 0.9em;
+            color: #6b7280;
+        }
+
+        .manual-input-container textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+
+        .manual-input-container textarea:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+
+        .input-hints {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px; 
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hint-item {
+            background: #f1f5f9;
+            padding: 8px 12px; 
+            border-radius: 20px;
+            font-size: 0.85em; 
+            color: #475569;
+        }
+
+        .hint-item code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .configuration-section {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .configuration-section h3 {
+            text-align: center;
+            color: #2d3748;
+            font-size: 1.4em;
+            margin-bottom: 25px;
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px;
+        }
+
+        .config-group h4 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .toggle-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .toggle-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .toggle-option:hover {
+            border-color: #4facfe;
+        }
+
+        .toggle-option.active {
+            border-color: #4facfe;
+            background: #f0f9ff;
+        }
+
+        .toggle-icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+
+        .toggle-content span {
+            display: block;
+            font-weight: 500;
+            color: #2d3748;
+        }
+
+        .toggle-content small {
+            color: #718096;
+            font-size: 0.85em;
+        }
+
+        .number-input-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .number-input-container input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+            font-weight: bold;
+            -moz-appearance: textfield; 
+        }
+        .number-input-container input::-webkit-outer-spin-button,
+        .number-input-container input::-webkit-inner-spin-button {
+            -webkit-appearance: none; 
+            margin: 0;
+        }
+
+
+        .number-input-container label {
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .sort-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .sort-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+            font-size: 0.95em;
+        }
+
+        .sort-option:hover {
+            border-color: #4facfe;
+        }
+
+        .sort-option.active {
+            border-color: #4facfe;
+            background: #4facfe;
+            color: white;
+        }
+
+        .sort-icon {
+            font-size: 1.1em;
+        }
+
+        .action-section {
+            text-align: center;
+            margin-bottom: 40px; 
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: none;
+            letter-spacing: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-large {
+            padding: 20px 40px;
+            font-size: 18px;
+            border-radius: 15px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none; 
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+            transform: translateY(-1px);
+        }
+
+        .results {
+            margin-top: 30px;
+        }
+
+        .groups-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .group {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .group:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .group-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px 10px 0 0; 
+            margin: -20px -20px 15px -20px; 
+            text-align: center;
+        }
+
+        .group-header h4 {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .group-size {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .student-list {
+            list-style: none;
+            padding: 0; 
+        }
+
+        .student-item {
+            padding: 10px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+        }
+
+        .student-item:last-child {
+            border-bottom: none;
+        }
+
+        .student-name {
+            font-weight: 500;
+            color: #2d3748;
+        }
+
+        .student-id {
+            font-size: 0.9em;
+            color: #718096;
+            margin-left: auto; 
+        }
+
+        .loading { 
+            text-align: center;
+            padding: 40px;
+            color: #718096;
+        }
+
+        .error-message { 
+            background: #fee2e2; 
+            border: 2px solid #fecaca;
+            color: #991b1b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .success-message {
+            background: #d1fae5;
+            border: 2px solid #a7f3d0;
+            color: #065f46;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+
+        #manualDataSection {
+            background: #f0f9ff;
+            border: 2px solid #0ea5e9;
+        }
+
+        #manualDataSection h3 {
+            color: #0c4a6e;
+        }
+
+        #csvDataSection {
+            background: #f0fdf4;
+            border: 2px solid #22c55e;
+        }
+
+        #csvDataSection h3 {
+            color: #15803d;
+        }
+
+        .suspense-container {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            color: white;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .suspense-message {
+            font-size: 2em;
+            font-weight: 300;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .suspense-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .suspense-dots {
+            font-size: 1.5em;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        #manualStudentData {
+            transition: border-color 0.3s ease;
+        }
+
+        #manualStudentData:focus {
+            border-color: #0ea5e9; 
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.5em;
+            }
+
+            .welcome-section {
+                padding: 30px 15px; 
+            }
+
+            .welcome-section h2 {
+                font-size: 1.5em;
+            }
+
+            .data-source-options {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .data-option {
+                padding: 20px;
+            }
+             .data-option input[type="radio"] { 
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+
+            .option-icon {
+                font-size: 2em;
+                margin-right: 15px;
+            }
+
+            .config-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .toggle-group {
+                gap: 8px;
+            }
+
+            .toggle-option {
+                padding: 12px;
+            }
+
+            .sort-options {
+                justify-content: center;
+            }
+
+            .sort-option {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 320px; 
+            }
+
+            .input-hints {
+                flex-direction: column;
+                align-items: center; 
+                gap: 10px;
+            }
+             .hint-item {
+                width: fit-content; 
+            }
+
+            .groups-container {
+                grid-template-columns: 1fr;
+            }
+
+            .suspense-message {
+                font-size: 1.3em;
+            }
+
+            .suspense-container {
+                padding: 30px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 30px 15px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .welcome-section {
+                padding: 25px 10px; 
+            }
+
+            .input-section {
+                padding: 20px;
+            }
+
+            .configuration-section {
+                padding: 20px;
+            }
+
+            .data-option {
+                padding: 15px;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .data-option input[type="radio"] {
+                position: static; 
+                margin-top: 10px;
+                transform: none; 
+            }
+
+            .option-icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            .toggle-option {
+                padding: 10px;
+            }
+
+            .toggle-icon {
+                font-size: 1.3em;
+                margin-right: 10px;
+            }
+
+            .btn-large {
+                padding: 18px 30px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👥 FormaDevs</h1>
+        </div>
+
+        <div class="main-content">
+            <div class="welcome-section">
+                <h2>🚀 Crie grupos de forma rápida e inteligente</h2>
+                <p>Escolha como inserir os dados dos participantes e configure seus grupos ideais</p>
+            </div>
+
+            <div class="data-input-section">
+                <h3>📝 Como você quer inserir os dados?</h3>
+                <div class="data-source-options">
+                    <div class="data-option active" data-source="manual"> <div class="option-icon">✏️</div>
+                        <div class="option-content">
+                            <h4>Entrada Manual</h4>
+                            <p>Digite os nomes diretamente</p>
+                        </div>
+                        <input type="radio" name="dataSource" value="manual" id="useManual" checked>
+                    </div>
+                    <div class="data-option" data-source="csv">
+                        <div class="option-icon">📄</div>
+                        <div class="option-content">
+                            <h4>Importar CSV</h4>
+                            <p>Carregue uma planilha</p>
+                        </div>
+                        <input type="radio" name="dataSource" value="csv" id="useCSV">
+                    </div>
+                </div>
+            </div>
+
+            <div class="students-info">
+                <div class="students-count" id="studentCount">0 participantes</div>
+                <div class="students-status" id="studentStatus">Aguardando dados...</div>
+            </div>
+            
+            <div id="results" class="results"></div>
+
+
+            <div id="csvDataSection" class="input-section"> <div class="section-header">
+                    <h3>📄 Importar Arquivo CSV</h3>
+                    <p>Arraste seu arquivo aqui ou clique para selecionar</p>
+                </div>
+                <div class="file-upload-area" id="fileUploadArea">
+                    <div class="upload-icon">📁</div>
+                    <div class="upload-text">
+                        <strong>Clique para selecionar</strong> ou arraste seu arquivo CSV
+                    </div>
+                    <div class="upload-hint">Formatos aceitos: CSV com colunas "nome" e/ou "matricula"</div>
+                    <input type="file" id="csvFileInput" accept=".csv,.txt" hidden>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="processCSVFile()" id="processCsvBtn" disabled>
+                        📊 Processar CSV
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearCSVData()">
+                        🗑️ Limpar
+                    </button>
+                </div>
+            </div>
+
+            <div id="manualDataSection" class="input-section active"> <div class="section-header">
+                    <h3>✏️ Entrada Manual</h3>
+                    <p>Digite os nomes dos participantes, um por linha</p>
+                </div>
+                <div class="manual-input-container">
+                    <textarea 
+                        id="manualStudentData" 
+                        placeholder="Exemplos de formatos aceitos:&#10;&#10;João Silva&#10;2025001 Maria Santos&#10;Pedro Oliveira&#10;2025002 Ana Costa"
+                        rows="8"
+                    ></textarea>
+                    <div class="input-hints">
+                        <div class="hint-item">✅ Apenas nome: <code>João Silva</code></div>
+                        <div class="hint-item">✅ Com matrícula: <code>2025001 João Silva</code></div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="processManualData()" id="processManualBtn" disabled> 📝 Processar Dados
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearManualData()">
+                        🗑️ Limpar
+                    </button>
+                    <button class="btn btn-secondary" onclick="loadSampleData()">
+                        💡 Carregar Exemplo
+                    </button>
+                </div>
+            </div>
+
+            <div class="configuration-section" id="configurationSection" style="display: none;">
+                <h3>⚙️ Configuração dos Grupos</h3>
+                
+                <div class="config-grid">
+                    <div class="config-group">
+                        <h4>🎯 Como dividir?</h4>
+                        <div class="toggle-group">
+                            <div class="toggle-option active" data-method="groups">
+                                <div class="toggle-icon">👥</div>
+                                <div class="toggle-content">
+                                    <span>Número de grupos</span>
+                                    <small>Ex: 4 grupos</small>
+                                </div>
+                            </div>
+                            <div class="toggle-option" data-method="students">
+                                <div class="toggle-icon">👤</div>
+                                <div class="toggle-content">
+                                    <span>Pessoas por grupo</span>
+                                    <small>Ex: 6 pessoas/grupo</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="number-input-container">
+                            <input type="number" id="groupInput" value="4" min="1" max="100"> <label id="inputLabel">grupos</label>
+                        </div>
+                    </div>
+
+                    <div class="config-group">
+                        <h4>🔀 Como organizar?</h4>
+                        <div class="sort-options">
+                            <div class="sort-option active" data-sort="random">
+                                <span class="sort-icon">🎲</span>
+                                <span>Aleatório</span>
+                            </div>
+                            <div class="sort-option" data-sort="alphabetical">
+                                <span class="sort-icon">🔤</span>
+                                <span>A → Z</span>
+                            </div>
+                            <div class="sort-option" data-sort="reverseAlphabetical">
+                                <span class="sort-icon">🔤</span>
+                                <span>Z → A</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-section" id="actionSection" style="display: none;">
+                <button class="btn btn-primary btn-large" onclick="sortGroups()" id="sortButton">
+                    🎲 Formar Grupos
+                </button>
+                <button class="btn btn-secondary" onclick="resetApp()"> 🔄 Nova Formação
+                </button>
+            </div>
+
+        </div> </div> <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script>
+        // Variáveis globais de estado
+        let manualStudentsData = [];
+        let csvStudentsData = [];
+        let currentDivisionMethod = 'groups'; // 'groups' ou 'students'
+        let currentSortMethod = 'random'; // 'random', 'alphabetical', 'reverseAlphabetical'
+
+        // Mensagens de suspense
+        const suspenseMessages = [
+            "🎲 Embaralhando os participantes...", "🔮 Consultando os deuses do acaso...",
+            "⚡ Aplicando algoritmos misteriosos...", "🎪 Fazendo mágica com os dados...",
+            "🌪️ Criando um redemoinho de nomes...", "🎯 Calculando a melhor combinação...",
+            "🚀 Enviando dados para a estratosfera...", "🧠 Ativando inteligência artificial...",
+            "⭐ Alinhando as estrelas...", "🎨 Pintando o quadro perfeito dos grupos...",
+            "🔥 Aquecendo os motores do sorteio...", "💫 Invocando a sorte...",
+            "🎭 Ensaiando a grande revelação..."
+        ];
+        
+        // Elementos da DOM frequentemente usados
+        const resultsDiv = document.getElementById('results');
+        const studentCountEl = document.getElementById('studentCount');
+        const studentStatusEl = document.getElementById('studentStatus');
+        const manualDataSection = document.getElementById('manualDataSection');
+        const csvDataSection = document.getElementById('csvDataSection');
+        const configurationSection = document.getElementById('configurationSection');
+        const actionSection = document.getElementById('actionSection');
+        const manualStudentDataTextarea = document.getElementById('manualStudentData');
+        const csvFileInput = document.getElementById('csvFileInput');
+        const processManualBtn = document.getElementById('processManualBtn');
+        const processCsvBtn = document.getElementById('processCsvBtn');
+        const groupInputEl = document.getElementById('groupInput');
+        const inputLabelEl = document.getElementById('inputLabel');
+        const sortButton = document.getElementById('sortButton');
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const uploadTextStrongEl = document.querySelector('#csvDataSection .upload-text strong');
+
+
+        // FUNÇÕES DE UI E FEEDBACK
+
+        function clearResultsDisplay() {
+            resultsDiv.innerHTML = '';
+        }
+
+        function showUserMessage(message, type = 'error') {
+            clearResultsDisplay(); // Limpa mensagens anteriores
+            const messageClass = type === 'error' ? 'error-message' : 'success-message';
+            const icon = type === 'error' ? '⚠️' : '✅';
+            const title = type === 'error' ? 'Erro:' : 'Sucesso:';
+            
+            resultsDiv.innerHTML = `
+                <div class="${messageClass}">
+                    <strong>${icon} ${title}</strong> ${message}
+                </div>`;
+            
+            if (type === 'success') {
+                setTimeout(() => {
+                    // Verifica se a mensagem ainda é a de sucesso antes de limpar
+                    if (resultsDiv.querySelector('.success-message')) {
+                         clearResultsDisplay();
+                    }
+                }, 3000);
+            }
+        }
+        
+        function showSuspenseAnimation() {
+            const randomMessage = suspenseMessages[Math.floor(Math.random() * suspenseMessages.length)];
+            resultsDiv.innerHTML = `
+                <div class="suspense-container">
+                    <div class="suspense-spinner"></div>
+                    <div class="suspense-message">${randomMessage}</div>
+                    <div class="suspense-dots">●●●</div>
+                </div>`;
+        }
+
+        function updateStudentCountAndStatus() {
+            const activeData = getActiveStudentsData();
+            const dataSource = document.querySelector('input[name="dataSource"]:checked').value;
+            let sourceText = '';
+            let statusText = 'Aguardando dados...';
+
+            if (activeData.length > 0) {
+                sourceText = dataSource === 'manual' ? '(entrada manual)' : '(arquivo CSV)';
+                statusText = dataSource === 'manual' ? 'Dados manuais processados!' : 'CSV importado com sucesso!';
+            }
+            
+            studentCountEl.textContent = `${activeData.length} participante${activeData.length !== 1 ? 's' : ''} ${sourceText}`;
+            studentStatusEl.textContent = statusText;
+            updateMainUIState(); // Atualiza seções de config e ação
+        }
+
+        function updateMainUIState() {
+            const hasData = getActiveStudentsData().length > 0;
+            configurationSection.style.display = hasData ? 'block' : 'none';
+            actionSection.style.display = hasData ? 'block' : 'none';
+            if (sortButton) sortButton.disabled = !hasData;
+        }
+        
+        function updateGroupInputLabel() {
+            if (currentDivisionMethod === 'groups') {
+                inputLabelEl.textContent = 'grupos';
+                groupInputEl.value = Math.min(Math.max(1, parseInt(groupInputEl.value) || 4), getActiveStudentsData().length || 4);
+            } else {
+                inputLabelEl.textContent = 'pessoas/grupo';
+                groupInputEl.value = Math.min(Math.max(1, parseInt(groupInputEl.value) || 6), getActiveStudentsData().length || 6);
+            }
+             // Garante que o valor mínimo seja 1, mesmo se não houver alunos (para evitar 0 ou NaN)
+            if (getActiveStudentsData().length === 0 && parseInt(groupInputEl.value) < 1) {
+                groupInputEl.value = currentDivisionMethod === 'groups' ? '1' : '1';
+            } else if (getActiveStudentsData().length > 0) {
+                 if (currentDivisionMethod === 'groups') {
+                    groupInputEl.max = getActiveStudentsData().length;
+                    if (parseInt(groupInputEl.value) > getActiveStudentsData().length) {
+                        groupInputEl.value = getActiveStudentsData().length;
+                    }
+                } else { // students per group
+                    groupInputEl.max = getActiveStudentsData().length; // Maximo de pessoas por grupo é o total de alunos
+                     if (parseInt(groupInputEl.value) > getActiveStudentsData().length) {
+                        groupInputEl.value = getActiveStudentsData().length;
+                    }
+                }
+            }
+             if (parseInt(groupInputEl.value) < 1) groupInputEl.value = '1';
+
+        }
+
+        // FUNÇÕES DE MANIPULAÇÃO DE DADOS
+
+        function getActiveStudentsData() {
+            const dataSource = document.querySelector('input[name="dataSource"]:checked').value;
+            return dataSource === 'manual' ? manualStudentsData : csvStudentsData;
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+        
+        function parseStudentLine(line, index) {
+            const trimmedLine = line.trim();
+            if (!trimmedLine) return null;
+
+            const parts = trimmedLine.split(/\s+/);
+            let matricula = null;
+            let nome = '';
+
+            if (parts.length > 1 && /^\d+$/.test(parts[0])) {
+                matricula = parseInt(parts[0]);
+                nome = parts.slice(1).join(' ').toUpperCase();
+            } else {
+                nome = trimmedLine.toUpperCase();
+                matricula = 10000 + index; // Matrícula fictícia única para ordenação e exibição
+            }
+            return nome ? { matricula, nome, n1:0 } : null; // n1:0 é um placeholder, pode ser usado para notas futuras
+        }
+
+        // PROCESSAMENTO DE ENTRADAS (MANUAL E CSV)
+
+        function processManualData() {
+            const textData = manualStudentDataTextarea.value.trim();
+            if (!textData) {
+                showUserMessage('Por favor, insira os dados dos participantes no campo de texto.');
+                return;
+            }
+            manualStudentsData = textData.split('\n')
+                                     .map((line, index) => parseStudentLine(line, index))
+                                     .filter(student => student !== null);
+
+            if (manualStudentsData.length === 0) {
+                showUserMessage('Nenhum participante válido foi encontrado nos dados inseridos.');
+            } else {
+                showUserMessage(`Dados manuais processados: ${manualStudentsData.length} participantes encontrados.`, 'success');
+            }
+            updateStudentCountAndStatus();
+            // Visual feedback
+            manualStudentDataTextarea.style.borderColor = '#38a169'; // Verde sucesso
+            setTimeout(() => { manualStudentDataTextarea.style.borderColor = ''; }, 1500);
+        }
+
+        function processCSVFile() {
+            const file = csvFileInput.files[0];
+            if (!file) {
+                showUserMessage('Por favor, selecione um arquivo CSV.');
+                return;
+            }
+
+            Papa.parse(file, {
+                header: true,
+                dynamicTyping: true,
+                skipEmptyLines: true,
+                delimitersToGuess: [',', '\t', '|', ';'],
+                complete: function(results) {
+                    if (results.errors.length > 0) {
+                        console.warn('Avisos ao processar CSV:', results.errors);
+                        // Não mostrar erro fatal por avisos, apenas se não houver dados válidos.
+                    }
+
+                    const data = results.data;
+                    if (data.length === 0) {
+                        showUserMessage('O arquivo CSV está vazio ou não pôde ser processado.');
+                        return;
+                    }
+
+                    csvStudentsData = [];
+                    data.forEach((row, index) => {
+                        let matricula = null;
+                        let nome = '';
+                        const possibleIdFields = ['matricula', 'matrícula', 'id', 'código', 'codigo'];
+                        const possibleNameFields = ['nome', 'name', 'student', 'estudante', 'aluno'];
+
+                        for (const field of possibleIdFields) {
+                            if (row[field] !== undefined && row[field] !== null) {
+                                matricula = parseInt(row[field]) || (20000 + index); // Matrícula fictícia única
+                                break;
+                            }
+                        }
+                        for (const field of possibleNameFields) {
+                            if (row[field] !== undefined && row[field] !== null && row[field].toString().trim()) {
+                                nome = row[field].toString().trim().toUpperCase();
+                                break;
+                            }
+                        }
+
+                        // Fallback se campos específicos não forem encontrados
+                        if (!nome) {
+                            const keys = Object.keys(row);
+                            if (keys.length > 0) {
+                                const firstValue = row[keys[0]];
+                                if (keys.length > 1 && /^\d+$/.test(firstValue?.toString())) {
+                                    matricula = parseInt(firstValue) || (20000 + index);
+                                    nome = row[keys[1]]?.toString().trim().toUpperCase() || '';
+                                } else {
+                                    nome = firstValue?.toString().trim().toUpperCase() || '';
+                                    if (!matricula) matricula = 20000 + index;
+                                }
+                            }
+                        }
+                        if (!matricula) matricula = 20000 + index; // Garantir matrícula
+
+                        if (nome) {
+                            csvStudentsData.push({ matricula, nome, n1:0 });
+                        }
+                    });
+
+                    if (csvStudentsData.length === 0) {
+                        showUserMessage('Nenhum participante válido foi encontrado no arquivo CSV. Verifique as colunas "nome" e/ou "matricula".');
+                    } else {
+                        showUserMessage(`CSV processado: ${csvStudentsData.length} participantes encontrados.`, 'success');
+                    }
+                    updateStudentCountAndStatus();
+                },
+                error: function(error) {
+                    showUserMessage('Erro ao ler o arquivo CSV: ' + error.message);
+                    console.error('Erro Papa Parse:', error);
+                }
+            });
+        }
+        
+        // LIMPEZA E RESET
+
+        function clearManualData() {
+            manualStudentDataTextarea.value = '';
+            manualStudentsData = [];
+            processManualBtn.disabled = true; // Desabilitar botão após limpar
+            if (document.querySelector('input[name="dataSource"]:checked').value === 'manual') {
+                 updateStudentCountAndStatus(); // Atualiza se esta era a fonte ativa
+            }
+            clearResultsDisplay();
+        }
+
+        function clearCSVData() {
+            csvFileInput.value = ''; // Limpa o input file
+            csvStudentsData = [];
+            uploadTextStrongEl.textContent = 'Clique para selecionar';
+            processCsvBtn.disabled = true;
+            if (document.querySelector('input[name="dataSource"]:checked').value === 'csv') {
+                updateStudentCountAndStatus(); // Atualiza se esta era a fonte ativa
+            }
+            clearResultsDisplay();
+        }
+        
+        function resetApp() {
+            clearManualData();
+            clearCSVData();
+            
+            // Resetar para entrada manual por padrão
+            document.getElementById('useManual').checked = true;
+            handleDataSourceChange(); // Isso vai atualizar a UI e contadores
+
+            // Resetar configurações de grupo
+            currentDivisionMethod = 'groups';
+            document.querySelector('.toggle-option[data-method="groups"]').click(); // Simula clique para atualizar UI
+            groupInputEl.value = '4';
+            updateGroupInputLabel();
+
+            currentSortMethod = 'random';
+            document.querySelectorAll('.sort-option').forEach(opt => opt.classList.remove('active'));
+            document.querySelector('.sort-option[data-sort="random"]').classList.add('active');
+            
+            clearResultsDisplay(); // Limpa a área de resultados
+            updateMainUIState(); // Garante que seções de config/ação sejam escondidas
+            studentStatusEl.textContent = "Aguardando dados..."; // Reseta status
+            showUserMessage("Sistema reiniciado. Pronto para uma nova formação!", "success");
+        }
+
+        // LÓGICA DE SORTEIO E EXIBIÇÃO DE GRUPOS
+
+        function sortGroups() {
+            const studentsData = getActiveStudentsData();
+            if (studentsData.length === 0) {
+                showUserMessage('Nenhum participante encontrado. Por favor, adicione participantes antes de formar os grupos.');
+                return;
+            }
+
+            const inputValue = parseInt(groupInputEl.value);
+            if (!inputValue || inputValue <= 0) {
+                showUserMessage('Por favor, insira um valor válido para a divisão dos grupos (maior que zero).');
+                return;
+            }
+
+            showSuspenseAnimation(); // Mostrar animação
+
+            setTimeout(() => { // Simular processamento
+                let sortedStudents = [...studentsData];
+                switch(currentSortMethod) {
+                    case 'alphabetical':
+                        sortedStudents.sort((a, b) => a.nome.localeCompare(b.nome));
+                        break;
+                    case 'reverseAlphabetical':
+                        sortedStudents.sort((a, b) => b.nome.localeCompare(a.nome));
+                        break;
+                    case 'random':
+                    default:
+                        sortedStudents = shuffleArray(sortedStudents);
+                        break;
+                }
+
+                let numberOfGroups;
+                if (currentDivisionMethod === 'groups') {
+                    numberOfGroups = inputValue;
+                    if (numberOfGroups > studentsData.length) {
+                         showUserMessage('O número de grupos não pode ser maior que o número de participantes.');
+                         return;
+                    }
+                } else { // 'students' (pessoas por grupo)
+                    if (inputValue > studentsData.length) {
+                        showUserMessage('O número de pessoas por grupo não pode ser maior que o total de participantes.');
+                        return;
+                    }
+                    numberOfGroups = Math.ceil(studentsData.length / inputValue);
+                }
+                 if (numberOfGroups <= 0) { // Checagem adicional
+                    showUserMessage('Configuração de grupos inválida. Verifique os valores.');
+                    return;
+                }
+
+
+                const groups = Array.from({ length: numberOfGroups }, () => []);
+                sortedStudents.forEach((student, index) => {
+                    groups[index % numberOfGroups].push(student);
+                });
+
+                displayGroupResults(groups, currentSortMethod);
+            }, 1500 + Math.random() * 1000); // Tempo de suspense
+        }
+
+        function displayGroupResults(groups, sortMethodApplied) {
+            clearResultsDisplay(); // Limpa suspense ou mensagens anteriores
+            const methodNames = {
+                'random': 'Sorteio Aleatório',
+                'alphabetical': 'Ordem Alfabética (A-Z)',
+                'reverseAlphabetical': 'Ordem Alfabética (Z-A)'
+            };
+
+            let html = `
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h2 style="color: #2d3748; margin-bottom: 10px;">🎉 Grupos Formados!</h2>
+                    <p style="color: #718096; font-size: 1.1em;">Método de organização interna: ${methodNames[sortMethodApplied]}</p>
+                    <p style="color: #718096;">Total de ${groups.length} grupos formados.</p>
+                </div>
+                <div class="groups-container">`;
+
+            groups.forEach((group, index) => {
+                html += `
+                    <div class="group">
+                        <div class="group-header">
+                            <h4>Grupo ${index + 1}</h4>
+                            <div class="group-size">${group.length} participante${group.length !== 1 ? 's' : ''}</div>
+                        </div>
+                        <ul class="student-list">`;
+                group.forEach(student => {
+                    // IDs fictícios (gerados com 10000+ ou 20000+) não são mostrados
+                    const displayId = student.matricula < 10000 ? student.matricula : ''; 
+                    html += `
+                            <li class="student-item">
+                                <span class="student-name">${student.nome}</span>
+                                ${displayId ? `<span class="student-id">${displayId}</span>` : ''}
+                            </li>`;
+                });
+                html += `</ul></div>`;
+            });
+            html += '</div>';
+            resultsDiv.innerHTML = html;
+        }
+
+        // EVENT LISTENERS E INICIALIZAÇÃO
+
+        function handleDataSourceChange() {
+            const dataSource = document.querySelector('input[name="dataSource"]:checked').value;
+            
+            document.querySelectorAll('.data-option').forEach(opt => opt.classList.remove('active'));
+            document.querySelector(`.data-option[data-source="${dataSource}"]`).classList.add('active');
+
+            manualDataSection.classList.toggle('active', dataSource === 'manual');
+            csvDataSection.classList.toggle('active', dataSource === 'csv');
+            
+            updateStudentCountAndStatus(); // Atualiza contagem e status
+            clearResultsDisplay(); // Limpa resultados ao trocar fonte
+        }
+        
+        function loadSampleData() {
+            const sampleData = `2025001001 JOÃO SILVA
+MARIA SANTOS
+2025001002 PEDRO OLIVEIRA
+ANA COSTA
+2025001003 LUCAS FERREIRA
+CARLA RODRIGUES
+BEATRIZ LIMA
+2025001004 RAFAEL SOUZA
+FERNANDA ALVES
+GABRIEL PEREIRA
+2025001005 JULIANA BARBOSA
+MATHEUS CORDEIRO`;
+            manualStudentDataTextarea.value = sampleData;
+            processManualBtn.disabled = false; // Habilita o botão de processar
+            // Opcional: processar automaticamente
+            // processManualData(); 
+            showUserMessage("Dados de exemplo carregados na área de entrada manual. Clique em 'Processar Dados'.", "success");
+        }
+
+
+        function setupEventListeners() {
+            // Seleção de fonte de dados (manual/CSV)
+            document.querySelectorAll('.data-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    if (!radio.checked) { // Evita reprocessar se já estiver selecionado
+                        radio.checked = true;
+                        handleDataSourceChange();
+                    }
+                });
+            });
+
+            // Alternar método de divisão (número de grupos / pessoas por grupo)
+            document.querySelectorAll('.toggle-option[data-method]').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.toggle-option[data-method]').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    currentDivisionMethod = this.dataset.method;
+                    updateGroupInputLabel();
+                });
+            });
+
+            // Seleção de método de organização interna dos grupos
+            document.querySelectorAll('.sort-option[data-sort]').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.sort-option[data-sort]').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    currentSortMethod = this.dataset.sort;
+                });
+            });
+
+            // Área de upload de arquivo CSV
+            fileUploadArea.addEventListener('click', () => csvFileInput.click());
+            fileUploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileUploadArea.classList.add('dragover');
+            });
+            fileUploadArea.addEventListener('dragleave', () => fileUploadArea.classList.remove('dragover'));
+            fileUploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileUploadArea.classList.remove('dragover');
+                if (e.dataTransfer.files.length > 0) {
+                    csvFileInput.files = e.dataTransfer.files;
+                    handleFileSelection();
+                }
+            });
+            csvFileInput.addEventListener('change', handleFileSelection);
+
+            // Monitorar entrada manual para habilitar/desabilitar botão
+            manualStudentDataTextarea.addEventListener('input', function() {
+                processManualBtn.disabled = this.value.trim().length === 0;
+            });
+            
+            // Monitorar input de grupos/pessoas
+            groupInputEl.addEventListener('input', function() {
+                // Garante que o valor não seja menor que 1
+                if (parseInt(this.value) < 1 && this.value !== '') {
+                    this.value = '1';
+                }
+                // Atualiza o max dinamicamente se necessário (já tratado em updateGroupInputLabel)
+                updateGroupInputLabel();
+            });
+        }
+        
+        function handleFileSelection() {
+            if (csvFileInput.files.length > 0) {
+                processCsvBtn.disabled = false;
+                uploadTextStrongEl.textContent = csvFileInput.files[0].name;
+            } else {
+                processCsvBtn.disabled = true;
+                uploadTextStrongEl.textContent = 'Clique para selecionar';
+            }
+        }
+
+        // Inicialização da aplicação
+        function initializeApp() {
+            setupEventListeners();
+            updateStudentCountAndStatus(); // Define o estado inicial da contagem e UI
+            updateGroupInputLabel(); // Define o label e valor inicial do input de grupos
+            handleDataSourceChange(); // Garante que a seção correta (manual) esteja visível
+            console.log('FormaDevs inicializado!');
+        }
+
+        window.addEventListener('load', initializeApp);
+
+    </script>
+</body>
+</html>
