@@ -1,0 +1,448 @@
+{
+  "techniques": [
+    {
+      "id": "zero-shot",
+      "name": "Zero-Shot Prompting",
+      "description": "O modelo executa tarefas sem exemplos prévios, baseando-se apenas em instruções diretas",
+      "applications": [
+        "Classificação de texto",
+        "Análise de sentimento",
+        "Tradução básica",
+        "Perguntas e respostas gerais"
+      ],
+      "scenarios": [
+        "Quando não há exemplos disponíveis",
+        "Tarefas simples",
+        "Teste rápido de capacidades"
+      ],
+      "example": "Classifique o sentimento: 'O filme foi incrível!' → Positivo",
+      "complexity": "Baixa",
+      "accuracy": "Média",
+      "efficiency": "Alta",
+      "token_usage": "Muito Baixo"
+    },
+    {
+      "id": "few-shot",
+      "name": "Few-Shot Prompting",
+      "description": "Fornece alguns exemplos para guiar o modelo na tarefa desejada",
+      "applications": [
+        "Formatação específica",
+        "Tarefas especializadas",
+        "Geração de código",
+        "Categorização complexa"
+      ],
+      "scenarios": [
+        "Quando precisamos de consistência",
+        "Domínios especializados",
+        "Formato específico de saída"
+      ],
+      "example": "Texto: 'Bom!' // Positivo\nTexto: 'Ruim!' // Negativo\nTexto: 'Ótimo!' // ?",
+      "complexity": "Baixa",
+      "accuracy": "Alta",
+      "efficiency": "Média",
+      "token_usage": "Médio"
+    },
+    {
+      "id": "chain-of-thought",
+      "name": "Chain-of-Thought (CoT)",
+      "description": "O modelo mostra seu raciocínio passo a passo para chegar à resposta final",
+      "applications": [
+        "Problemas matemáticos",
+        "Raciocínio lógico",
+        "Análise complexa",
+        "Resolução de problemas"
+      ],
+      "scenarios": [
+        "Problemas multi-etapas",
+        "Quando transparência é importante",
+        "Tarefas de raciocínio complexo"
+      ],
+      "example": "Jason tinha 20 balas, deu algumas para Denny, agora tem 12. Vamos pensar passo a passo: 20 - x = 12, então x = 8.",
+      "complexity": "Média",
+      "accuracy": "Muito Alta",
+      "efficiency": "Baixa",
+      "token_usage": "Alto"
+    },
+    {
+      "id": "chain-of-drafts",
+      "name": "Chain-of-Drafts (CoD)",
+      "description": "Raciocínio minimalista, focando apenas nos passos essenciais, cada etapa com até 5 palavras",
+      "applications": [
+        "Raciocínio matemático",
+        "Lógica",
+        "Aplicações em tempo real",
+        "Tarefas que exigem eficiência",
+        "Sistemas embarcados"
+      ],
+      "scenarios": [
+        "Quando eficiência é crucial",
+        "Recursos limitados",
+        "Aplicações de produção",
+        "Sistemas de baixa latência"
+      ],
+      "example": "Jason: 20 - x = 12; x = 8 ####",
+      "complexity": "Média",
+      "accuracy": "Alta",
+      "efficiency": "Muito Alta",
+      "token_usage": "Muito Baixo"
+    },
+    {
+      "id": "tree-of-thoughts",
+      "name": "Tree-of-Thoughts (ToT)",
+      "description": "Explora múltiplos caminhos de raciocínio simultaneamente, como uma árvore de decisões",
+      "applications": [
+        "Problemas complexos",
+        "Planejamento estratégico",
+        "Escrita criativa",
+        "Jogos",
+        "Tomada de decisão"
+      ],
+      "scenarios": [
+        "Múltiplas abordagens válidas",
+        "Problemas criativos",
+        "Planejamento complexo"
+      ],
+      "example": "Explorar 3 estratégias diferentes: A) Abordagem direta B) Método iterativo C) Solução criativa",
+      "complexity": "Alta",
+      "accuracy": "Muito Alta",
+      "efficiency": "Baixa",
+      "token_usage": "Muito Alto"
+    },
+    {
+      "id": "role-based",
+      "name": "Role-Based Prompting",
+      "description": "Atribui um papel específico ao modelo para guiar suas respostas",
+      "applications": [
+        "Consultoria especializada",
+        "Ensino",
+        "Atendimento ao cliente",
+        "Criação de conteúdo especializado"
+      ],
+      "scenarios": [
+        "Expertise específica necessária",
+        "Tom particular de resposta",
+        "Contexto profissional"
+      ],
+      "example": "Você é um médico. Explique os sintomas da gripe de forma simples.",
+      "complexity": "Baixa",
+      "accuracy": "Alta",
+      "efficiency": "Alta",
+      "token_usage": "Baixo"
+    },
+    {
+      "id": "meta-prompting",
+      "name": "Meta-Prompting",
+      "description": "Usa o próprio modelo para gerar e otimizar prompts",
+      "applications": [
+        "Otimização de prompts",
+        "Automação de testes",
+        "Melhoria iterativa",
+        "Desenvolvimento de prompts"
+      ],
+      "scenarios": [
+        "Quando precisamos otimizar prompts",
+        "Desenvolvimento iterativo",
+        "Automação de qualidade"
+      ],
+      "example": "Gere 5 variações do prompt 'Analise este texto' para melhorar os resultados.",
+      "complexity": "Alta",
+      "accuracy": "Muito Alta",
+      "efficiency": "Média",
+      "token_usage": "Alto"
+    },
+    {
+      "id": "self-refine",
+      "name": "Self-Refine Prompting",
+      "description": "Melhoria iterativa das respostas através de auto-avaliação e refinamento",
+      "applications": [
+        "Escrita criativa",
+        "Análise crítica",
+        "Melhoria de qualidade",
+        "Revisão de conteúdo"
+      ],
+      "scenarios": [
+        "Quando qualidade é prioritária",
+        "Processos iterativos",
+        "Refinamento de resultados"
+      ],
+      "example": "Escreva um parágrafo, depois critique-o e melhore-o em 3 iterações.",
+      "complexity": "Alta",
+      "accuracy": "Muito Alta",
+      "efficiency": "Baixa",
+      "token_usage": "Alto"
+    },
+    {
+      "id": "generated-knowledge",
+      "name": "Generated Knowledge Prompting",
+      "description": "Incorpora conhecimento contextual gerado pelo próprio modelo",
+      "applications": [
+        "QA com contexto",
+        "Síntese de informações",
+        "Análise baseada em conhecimento"
+      ],
+      "scenarios": [
+        "Quando contexto adicional é necessário",
+        "Tarefas de conhecimento intensivo"
+      ],
+      "example": "Primeiro gere fatos sobre energia solar, depois responda sobre sua viabilidade.",
+      "complexity": "Alta",
+      "accuracy": "Muito Alta",
+      "efficiency": "Média",
+      "token_usage": "Alto"
+    },
+    {
+      "id": "rag",
+      "name": "Retrieval-Augmented Generation (RAG)",
+      "description": "Combina recuperação de informações com geração de texto",
+      "applications": [
+        "Sistemas de QA",
+        "Documentação",
+        "Suporte técnico",
+        "Pesquisa automatizada"
+      ],
+      "scenarios": [
+        "Informações atualizadas necessárias",
+        "Base de conhecimento específica"
+      ],
+      "example": "Busque informações sobre o produto X e responda sobre suas especificações.",
+      "complexity": "Muito Alta",
+      "accuracy": "Muito Alta",
+      "efficiency": "Média",
+      "token_usage": "Alto"
+    },
+    {
+      "id": "prompt-chaining",
+      "name": "Prompt Chaining",
+      "description": "Workflows complexos em múltiplas etapas encadeadas",
+      "applications": [
+        "Workflows complexos",
+        "Processamento de documentos",
+        "Análise multi-etapas"
+      ],
+      "scenarios": [
+        "Tarefas complexas divididas",
+        "Pipelines de processamento"
+      ],
+      "example": "Etapa 1: Extrair dados → Etapa 2: Analisar → Etapa 3: Gerar relatório",
+      "complexity": "Alta",
+      "accuracy": "Alta",
+      "efficiency": "Média",
+      "token_usage": "Alto"
+    },
+    {
+      "id": "react",
+      "name": "ReAct (Reasoning + Acting)",
+      "description": "Alterna entre raciocínio e execução de ações externas",
+      "applications": [
+        "Agentes autônomos",
+        "Integração com APIs",
+        "Busca em tempo real",
+        "Automação"
+      ],
+      "scenarios": [
+        "Acesso a dados externos necessário",
+        "Ações em sistemas externos"
+      ],
+      "example": "Pensamento: Preciso da cotação → Ação: Buscar API → Resposta: Analisar dados",
+      "complexity": "Muito Alta",
+      "accuracy": "Alta",
+      "efficiency": "Média",
+      "token_usage": "Alto"
+    }
+  ],
+  "domains": [
+    {
+      "name": "Educação",
+      "applications": [
+        "Tutoria personalizada",
+        "Geração de exercícios",
+        "Planos de aula automatizados"
+      ],
+      "best_techniques": [
+        "Role-Based",
+        "Chain-of-Thought",
+        "Few-Shot"
+      ]
+    },
+    {
+      "name": "Saúde",
+      "applications": [
+        "Análise de sintomas",
+        "Suporte à decisão médica",
+        "Educação de pacientes"
+      ],
+      "best_techniques": [
+        "Role-Based",
+        "Generated Knowledge",
+        "Chain-of-Thought"
+      ]
+    },
+    {
+      "name": "Negócios",
+      "applications": [
+        "Atendimento ao cliente",
+        "Análise de dados",
+        "Relatórios automatizados"
+      ],
+      "best_techniques": [
+        "Role-Based",
+        "RAG",
+        "Chain-of-Drafts"
+      ]
+    },
+    {
+      "name": "Tecnologia",
+      "applications": [
+        "Geração de código",
+        "Debugging",
+        "Documentação técnica"
+      ],
+      "best_techniques": [
+        "Few-Shot",
+        "Chain-of-Thought",
+        "Meta-Prompting"
+      ]
+    },
+    {
+      "name": "Criatividade",
+      "applications": [
+        "Escrita criativa",
+        "Geração de ideias",
+        "Campanhas publicitárias"
+      ],
+      "best_techniques": [
+        "Tree-of-Thoughts",
+        "Self-Refine",
+        "Role-Based"
+      ]
+    },
+    {
+      "name": "Pesquisa",
+      "applications": [
+        "Síntese de literatura",
+        "Análise de dados",
+        "Geração de hipóteses"
+      ],
+      "best_techniques": [
+        "RAG",
+        "Generated Knowledge",
+        "Meta-Prompting"
+      ]
+    }
+  ],
+  "comparison_metrics": {
+    "complexity": {
+      "Baixa": [
+        "Zero-Shot",
+        "Few-Shot",
+        "Role-Based"
+      ],
+      "Média": [
+        "Chain-of-Thought",
+        "Chain-of-Drafts",
+        "RAG"
+      ],
+      "Alta": [
+        "Tree-of-Thoughts",
+        "Meta-Prompting",
+        "Self-Refine",
+        "Prompt-Chaining"
+      ],
+      "Muito Alta": [
+        "ReAct"
+      ]
+    },
+    "accuracy": {
+      "Média": [
+        "Zero-Shot"
+      ],
+      "Alta": [
+        "Few-Shot",
+        "Role-Based",
+        "Chain-of-Drafts",
+        "Prompt-Chaining",
+        "ReAct"
+      ],
+      "Muito Alta": [
+        "Chain-of-Thought",
+        "Tree-of-Thoughts",
+        "Meta-Prompting",
+        "Self-Refine",
+        "Generated Knowledge",
+        "RAG"
+      ]
+    },
+    "efficiency": {
+      "Baixa": [
+        "Chain-of-Thought",
+        "Tree-of-Thoughts",
+        "Self-Refine"
+      ],
+      "Média": [
+        "Few-Shot",
+        "Meta-Prompting",
+        "Generated Knowledge",
+        "RAG",
+        "Prompt-Chaining",
+        "ReAct"
+      ],
+      "Alta": [
+        "Zero-Shot",
+        "Role-Based"
+      ],
+      "Muito Alta": [
+        "Chain-of-Drafts"
+      ]
+    }
+  },
+  "use_cases": [
+    {
+      "scenario": "Aplicação em tempo real",
+      "recommended": [
+        "Chain-of-Drafts",
+        "Zero-Shot",
+        "Role-Based"
+      ],
+      "avoid": [
+        "Tree-of-Thoughts",
+        "Self-Refine"
+      ]
+    },
+    {
+      "scenario": "Alta precisão necessária",
+      "recommended": [
+        "Chain-of-Thought",
+        "Tree-of-Thoughts",
+        "RAG"
+      ],
+      "avoid": [
+        "Zero-Shot"
+      ]
+    },
+    {
+      "scenario": "Recursos limitados",
+      "recommended": [
+        "Chain-of-Drafts",
+        "Zero-Shot",
+        "Few-Shot"
+      ],
+      "avoid": [
+        "Tree-of-Thoughts",
+        "Self-Refine",
+        "RAG"
+      ]
+    },
+    {
+      "scenario": "Tarefas criativas",
+      "recommended": [
+        "Tree-of-Thoughts",
+        "Self-Refine",
+        "Role-Based"
+      ],
+      "avoid": [
+        "Chain-of-Drafts",
+        "Zero-Shot"
+      ]
+    }
+  ]
+}
