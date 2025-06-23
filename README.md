@@ -1,1 +1,1 @@
-# ninja-singlepageapps.github.io
+# ninja-apps
