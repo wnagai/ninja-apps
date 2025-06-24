@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Interativo do Método Kanban</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Fixo -->
+    <header class="header">
+        <div class="container">
+            <h1>Guia Interativo do Método Kanban</h1>
+            <nav class="nav">
+                <a href="#introducao" class="nav-link">Introdução</a>
+                <a href="#principios" class="nav-link">Princípios</a>
+                <a href="#praticas" class="nav-link">Práticas</a>
+                <a href="#metafora" class="nav-link">Metáfora Kan-Bahn</a>
+                <a href="#quadros" class="nav-link">Quadros</a>
+                <a href="#metricas" class="nav-link">Métricas</a>
+                <a href="#cadencias" class="nav-link">Cadências</a>
+                <a href="#statik" class="nav-link">STATIK</a>
+                <a href="#recursos" class="nav-link">Recursos</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Introdução -->
+        <section id="introducao" class="section">
+            <div class="container">
+                <div class="card">
+                    <div class="card__body">
+                        <h2>O que é o Método Kanban?</h2>
+                        <p>O Kanban é um método de gestão de trabalho que visualiza o fluxo de tarefas, limita o trabalho em progresso e promove a melhoria contínua. Originado na Toyota, hoje é usado em diversos contextos, incluindo estudos e projetos acadêmicos.</p>
+                        
+                        <div class="expand-section">
+                            <button class="btn btn--outline expand-btn" data-target="kanban-details">Saiba Mais</button>
+                            <div class="expandable-content" id="kanban-details">
+                                <h4>Método vs Metodologia vs Framework</h4>
+                                <p><strong>Método:</strong> O Kanban é um método porque oferece um conjunto específico de práticas e princípios para melhorar o fluxo de trabalho.</p>
+                                <p><strong>Metodologia:</strong> Seria um conjunto mais amplo de processos e técnicas. O Kanban se concentra especificamente na visualização e fluxo.</p>
+                                <p><strong>Framework:</strong> Embora flexível, o Kanban tem estrutura definida com suas práticas e princípios fundamentais.</p>
+                            </div>
+                        </div>
+
+                        <div class="intro-benefits">
+                            <div class="benefit-card">
+                                <h4>📊 Visualização</h4>
+                                <p>Veja todo o trabalho em um só lugar</p>
+                            </div>
+                            <div class="benefit-card">
+                                <h4>⚡ Fluxo</h4>
+                                <p>Mantenha as tarefas em movimento</p>
+                            </div>
+                            <div class="benefit-card">
+                                <h4>🔄 Melhoria</h4>
+                                <p>Evolua continuamente o processo</p>
+                            </div>
+                            <div class="benefit-card">
+                                <h4>🚦 Limites</h4>
+                                <p>Controle o trabalho em progresso</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Princípios -->
+        <section id="principios" class="section">
+            <div class="container">
+                <h2>Princípios do Kanban com Exemplos Práticos</h2>
+                
+                <div class="principles-container">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Princípios de Gestão de Mudanças</h3>
+                            <div class="principles-list" id="change-principles">
+                                <!-- Gerado via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Princípios de Entrega de Serviços</h3>
+                            <div class="principles-list" id="service-principles">
+                                <!-- Gerado via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Práticas -->
+        <section id="praticas" class="section">
+            <div class="container">
+                <h2>Práticas Gerais do Kanban</h2>
+                <div class="practices-grid">
+                    <div class="practice-card">
+                        <div class="practice-icon">📊</div>
+                        <h4>1. Visualizar o Fluxo</h4>
+                        <p>Crie um quadro que mostre todas as etapas do seu processo de trabalho, tornando visível o que era invisível.</p>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-icon">⚡</div>
+                        <h4>2. Limitar WIP</h4>
+                        <p>Defina quantas tarefas podem estar em cada etapa simultaneamente para evitar sobrecarga e gargalos.</p>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-icon">🌊</div>
+                        <h4>3. Gerenciar Fluxo</h4>
+                        <p>Monitore como as tarefas se movem pelo sistema e identifique pontos de melhoria no processo.</p>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-icon">📋</div>
+                        <h4>4. Políticas Explícitas</h4>
+                        <p>Deixe claro quando uma tarefa pode mover de uma coluna para outra, criando critérios transparentes.</p>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-icon">🔄</div>
+                        <h4>5. Implementar Feedback</h4>
+                        <p>Crie momentos regulares para revisar e melhorar o processo através de ciclos de feedback.</p>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-icon">🤝</div>
+                        <h4>6. Melhorar Colaborativamente</h4>
+                        <p>Todos participam das decisões de como melhorar o sistema através de experimentação científica.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Metáfora Kan-Bahn -->
+        <section id="metafora" class="section">
+            <div class="container">
+                <h2>Metáfora Kan-Bahn Interativa</h2>
+                <div class="card">
+                    <div class="card__body">
+                        <p>Imagine uma autobahn (rodovia alemã) dividida em setores. Cada setor tem capacidade limitada. Se muitos carros (tarefas) entram, o tráfego fica lento! Esta simulação demonstra como os limites de WIP afetam o fluxo.</p>
+                        
+                        <div class="highway-controls">
+                            <button class="btn btn--primary" id="add-car" title="Adiciona um novo veículo">Adicionar Veículo</button>
+                            <button class="btn btn--secondary" id="advance-cars" title="Move todos os veículos para frente">Avançar Veículos</button>
+                            <button class="btn btn--warning" id="simulate-jam" title="Adiciona vários veículos rapidamente">Simular Congestionamento</button>
+                            <button class="btn btn--outline" id="adjust-limits" title="Modifica os limites dos setores">Ajustar Limites</button>
+                            <button class="btn btn--outline" id="reset-highway" title="Limpa todos os veículos">Resetar</button>
+                        </div>
+
+                        <div class="highway" id="highway">
+                            <div class="highway-sector" data-sector="0">
+                                <h4>🚗 Entrada <span class="capacity">0/3</span></h4>
+                                <div class="cars-container"></div>
+                            </div>
+                            <div class="highway-sector" data-sector="1">
+                                <h4>🚧 Setor 1 <span class="capacity">0/2</span></h4>
+                                <div class="cars-container"></div>
+                            </div>
+                            <div class="highway-sector" data-sector="2">
+                                <h4>🚧 Setor 2 <span class="capacity">0/2</span></h4>
+                                <div class="cars-container"></div>
+                            </div>
+                            <div class="highway-sector" data-sector="3">
+                                <h4>🏁 Saída <span class="capacity">0/∞</span></h4>
+                                <div class="cars-container"></div>
+                            </div>
+                        </div>
+
+                        <div class="highway-insights" id="highway-insights">
+                            <p>💡 <strong>Insight:</strong> Adicione veículos e observe como o limite de capacidade afeta o fluxo!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quadros Interativos -->
+        <section id="quadros" class="section">
+            <div class="container">
+                <h2>Quadro Kanban Interativo</h2>
+                <div class="card">
+                    <div class="card__body">
+                        <p>Experimente um quadro Kanban funcional! Arraste e solte tarefas entre as colunas para ver como funciona o fluxo de trabalho. Exemplo prático: Desenvolvimento de Cursos.</p>
+                        
+                        <div class="add-task-controls">
+                            <input type="text" id="new-task-input" class="form-control" placeholder="Digite uma nova tarefa de curso (ex: Criar slides de Python)...">
+                            <button class="btn btn--primary" id="add-task">Adicionar Tarefa</button>
+                        </div>
+
+                        <div class="kanban-board" id="kanban-board">
+                            <!-- Colunas geradas via JavaScript com cores específicas -->
+                        </div>
+
+                        <div class="wip-limits-info">
+                            <h4>Limites de WIP Sugeridos:</h4>
+                            <ul>
+                                <li><strong>A Fazer:</strong> Ilimitado (backlog)</li>
+                                <li><strong>Em Progresso:</strong> 3 tarefas máximo</li>
+                                <li><strong>Em Revisão:</strong> 2 tarefas máximo</li>
+                                <li><strong>Concluído:</strong> Ilimitado</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Métricas -->
+        <section id="metricas" class="section">
+            <div class="container">
+                <h2>Métricas do Kanban</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card" data-metric="lead_time">
+                        <h4>⏱️ Lead Time</h4>
+                        <p class="metric-description"></p>
+                        <div class="metric-example">
+                            <strong>Exemplo:</strong> Uma tarefa entra no backlog na segunda-feira e é concluída na sexta-feira = 5 dias de Lead Time.
+                        </div>
+                        <div class="metric-chart">📈 Run Chart, Histograma</div>
+                    </div>
+                    <div class="metric-card" data-metric="cycle_time">
+                        <h4>🔄 Cycle Time</h4>
+                        <p class="metric-description"></p>
+                        <div class="metric-example">
+                            <strong>Exemplo:</strong> Começou a trabalhar terça-feira, terminou quinta-feira = 3 dias de Cycle Time.
+                        </div>
+                        <div class="metric-chart">📊 Histograma, Controle</div>
+                    </div>
+                    <div class="metric-card" data-metric="wip">
+                        <h4>📊 Work in Progress (WIP)</h4>
+                        <p class="metric-description"></p>
+                        <div class="metric-example">
+                            <strong>Exemplo:</strong> Se há 3 tarefas em "Em Progresso" e 2 em "Em Revisão", WIP total = 5.
+                        </div>
+                        <div class="metric-chart">📉 CFD, Run Chart</div>
+                    </div>
+                    <div class="metric-card" data-metric="throughput">
+                        <h4>🚀 Throughput</h4>
+                        <p class="metric-description"></p>
+                        <div class="metric-example">
+                            <strong>Exemplo:</strong> Concluiu 10 tarefas esta semana = Throughput de 10 tarefas/semana.
+                        </div>
+                        <div class="metric-chart">📈 Run Chart, CFD</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cadências -->
+        <section id="cadencias" class="section">
+            <div class="container">
+                <h2>Cadências do Kanban</h2>
+                <div class="card">
+                    <div class="card__body">
+                        <div class="cadence-intro">
+                            <h4>O que são Cadências?</h4>
+                            <p>Cadências são <strong>ciclos regulares de reuniões e revisões</strong> que mantêm o sistema Kanban funcionando de forma suave e evolutiva. Elas garantem feedback constante e melhoria contínua.</p>
+                        </div>
+
+                        <h4>Níveis de Cadências</h4>
+                        <p>Avalie o nível das suas cadências de reuniões e feedback:</p>
+                        
+                        <div class="cadences-table-container">
+                            <table class="cadences-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nível de Cadência</th>
+                                        <th>Características</th>
+                                        <th>Exemplo Prático</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cadences-body">
+                                    <!-- Gerado via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="main-cadences">
+                            <h4>Principais Cadências Kanban:</h4>
+                            <div class="cadence-types">
+                                <div class="cadence-type">
+                                    <h5>📅 Daily Kanban (Standup Diário)</h5>
+                                    <p>Reunião rápida de 15 minutos para revisar o quadro, identificar bloqueios e coordenar o trabalho do dia.</p>
+                                </div>
+                                <div class="cadence-type">
+                                    <h5>🔄 Replenishment (Seleção Semanal)</h5>
+                                    <p>Reunião semanal para selecionar novas tarefas do backlog e priorizar o trabalho com base na capacidade.</p>
+                                </div>
+                                <div class="cadence-type">
+                                    <h5>🔍 Retrospective (Revisão Quinzenal/Mensal)</h5>
+                                    <p>Reunião para analisar métricas, identificar melhorias no processo e ajustar políticas do sistema.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATIK -->
+        <section id="statik" class="section">
+            <div class="container">
+                <h2>Framework STATIK - Wizard Interativo</h2>
+                <div class="card">
+                    <div class="card__body">
+                        <p>STATIK (Systems Thinking Approach to Implementing Kanban) é um framework baseado no pensamento sistêmico para implementar Kanban de forma evolutiva.</p>
+                        
+                        <div class="statik-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="statik-progress"></div>
+                            </div>
+                            <span class="progress-text">Passo <span id="current-step">1</span> de 8</span>
+                        </div>
+
+                        <div class="statik-wizard" id="statik-wizard">
+                            <!-- Passos gerados via JavaScript -->
+                        </div>
+
+                        <div class="statik-controls">
+                            <button class="btn btn--outline" id="statik-prev" disabled>Anterior</button>
+                            <button class="btn btn--primary" id="statik-next">Próximo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recursos -->
+        <section id="recursos" class="section">
+            <div class="container">
+                <h2>Recursos Adicionais</h2>
+                <div class="resources-grid">
+                    <div class="card">
+                        <div class="card__body">
+                            <h4>📚 Materiais para Download</h4>
+                            <ul class="resource-list">
+                                <li><a href="#download-template" class="download-link">Template de Quadro Kanban (PDF)</a></li>
+                                <li><a href="#download-metrics" class="download-link">Guia de Métricas Kanban (XLSX)</a></li>
+                                <li><a href="#download-statik" class="download-link">Checklist STATIK Completo (DOCX)</a></li>
+                                <li><a href="#download-cadences" class="download-link">Guia de Cadências (PDF)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h4>🎯 Quiz de Conhecimentos</h4>
+                            <p>Teste seus conhecimentos sobre o método Kanban com questões práticas!</p>
+                            <button class="btn btn--primary" id="start-quiz">Iniciar Quiz</button>
+                            <div class="quiz-container hidden" id="quiz-container">
+                                <!-- Quiz gerado via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h4>📖 Glossário Interativo</h4>
+                            <div class="glossary-grid">
+                                <div class="glossary-term">
+                                    <strong>WIP</strong>
+                                    <div class="tooltip">Work in Progress - Trabalho em Progresso</div>
+                                </div>
+                                <div class="glossary-term">
+                                    <strong>Throughput</strong>
+                                    <div class="tooltip">Taxa de entrega de trabalho concluído</div>
+                                </div>
+                                <div class="glossary-term">
+                                    <strong>Pull System</strong>
+                                    <div class="tooltip">Sistema onde trabalho é "puxado" quando há capacidade</div>
+                                </div>
+                                <div class="glossary-term">
+                                    <strong>Gargalo</strong>
+                                    <div class="tooltip">Ponto que limita o fluxo do sistema</div>
+                                </div>
+                                <div class="glossary-term">
+                                    <strong>CFD</strong>
+                                    <div class="tooltip">Cumulative Flow Diagram - Diagrama de Fluxo Cumulativo</div>
+                                </div>
+                                <div class="glossary-term">
+                                    <strong>Cadência</strong>
+                                    <div class="tooltip">Ciclos regulares de reuniões e revisões</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h4>🔗 Links Úteis</h4>
+                            <ul class="resource-list">
+                                <li><a href="https://kanbanblog.com" target="_blank">Kanban Blog Oficial</a></li>
+                                <li><a href="https://kanban.university" target="_blank">Kanban University</a></li>
+                                <li><a href="https://leankanban.com" target="_blank">Lean Kanban Inc.</a></li>
+                                <li><a href="https://djaa.com" target="_blank">David J. Anderson & Associates</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Guia Interativo do Método Kanban. Desenvolvido para fins educacionais com foco na aprendizagem prática.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
