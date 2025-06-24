@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taxonomia de Bloom Interativa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <h1 class="header__title">🎓 Taxonomia de Bloom Interativa</h1>
+                <div class="header__controls">
+                    <button class="btn btn--sm" id="toggleTheme">🌙</button>
+                    <div class="progress-display">
+                        <span class="progress-text">Progresso: <span id="progressPercent">0%</span></span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <div class="container">
+                <div class="tabs-container">
+                    <button class="tab-btn active" data-tab="overview">📊 Visão Geral</button>
+                    <button class="tab-btn" data-tab="levels">🧬 Níveis</button>
+                    <button class="tab-btn" data-tab="quiz">🎮 Quiz</button>
+                    <button class="tab-btn" data-tab="tools">🛠️ Ferramentas</button>
+                    <button class="tab-btn" data-tab="history">📜 História</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                
+                <!-- Overview Tab -->
+                <div class="tab-content active" id="overview">
+                    <div class="hero-section">
+                        <h2>Explore a Taxonomia de Bloom</h2>
+                        <p>Uma jornada interativa através dos níveis cognitivos de aprendizagem</p>
+                        
+                        <div class="bloom-pyramid">
+                            <div class="pyramid-level" data-level="criar" style="background: #9b59b6">
+                                <span class="level-icon">🎨</span>
+                                <span class="level-name">Criar</span>
+                            </div>
+                            <div class="pyramid-level" data-level="avaliar" style="background: #e74c3c">
+                                <span class="level-icon">⚖️</span>
+                                <span class="level-name">Avaliar</span>
+                            </div>
+                            <div class="pyramid-level" data-level="analisar" style="background: #f1c40f; color: #333">
+                                <span class="level-icon">🔬</span>
+                                <span class="level-name">Analisar</span>
+                            </div>
+                            <div class="pyramid-level" data-level="aplicar" style="background: #e67e22">
+                                <span class="level-icon">⚙️</span>
+                                <span class="level-name">Aplicar</span>
+                            </div>
+                            <div class="pyramid-level" data-level="compreender" style="background: #27ae60">
+                                <span class="level-icon">💡</span>
+                                <span class="level-name">Compreender</span>
+                            </div>
+                            <div class="pyramid-level" data-level="recordar" style="background: #3498db">
+                                <span class="level-icon">🧠</span>
+                                <span class="level-name">Recordar</span>
+                            </div>
+                        </div>
+
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <h3>6</h3>
+                                <p>Níveis Cognitivos</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3 id="userScore">0</h3>
+                                <p>Sua Pontuação</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3 id="badgesEarned">0</h3>
+                                <p>Badges Conquistadas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Levels Tab -->
+                <div class="tab-content" id="levels">
+                    <h2>Explore os Níveis Cognitivos</h2>
+                    <div class="levels-grid" id="levelsGrid">
+                        <!-- Cards will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Quiz Tab -->
+                <div class="tab-content" id="quiz">
+                    <div class="quiz-container">
+                        <h2>Quiz Interativo</h2>
+                        <div class="quiz-progress">
+                            <div class="quiz-progress-bar">
+                                <div class="quiz-progress-fill" id="quizProgressFill"></div>
+                            </div>
+                            <span class="quiz-counter">Pergunta <span id="currentQuestion">1</span> de <span id="totalQuestions">10</span></span>
+                        </div>
+                        
+                        <div class="quiz-content" id="quizContent">
+                            <div class="quiz-question" id="quizQuestion">
+                                Clique em "Iniciar Quiz" para começar!
+                            </div>
+                            
+                            <div class="quiz-options" id="quizOptions">
+                                <!-- Options will be populated by JavaScript -->
+                            </div>
+                            
+                            <div class="quiz-controls">
+                                <button class="btn btn--primary" id="startQuiz">Iniciar Quiz</button>
+                                <button class="btn btn--secondary hidden" id="nextQuestion">Próxima Pergunta</button>
+                                <button class="btn btn--outline hidden" id="restartQuiz">Reiniciar Quiz</button>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-results hidden" id="quizResults">
+                            <h3>Resultados do Quiz</h3>
+                            <div class="results-summary" id="resultsSummary"></div>
+                            <div class="achievements" id="achievements"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools Tab -->
+                <div class="tab-content" id="tools">
+                    <h2>Ferramentas Práticas</h2>
+                    
+                    <div class="tools-grid">
+                        <div class="tool-card">
+                            <h3>🎯 Gerador de Objetivos</h3>
+                            <p>Crie objetivos de aprendizagem baseados na Taxonomia de Bloom</p>
+                            
+                            <div class="tool-form">
+                                <select class="form-control" id="levelSelect">
+                                    <option value="">Selecione um nível</option>
+                                </select>
+                                <input type="text" class="form-control" id="topicInput" placeholder="Digite o tópico (ex: energia solar)">
+                                <button class="btn btn--primary" id="generateObjective">Gerar Objetivo</button>
+                            </div>
+                            
+                            <div class="generated-objective" id="generatedObjective"></div>
+                        </div>
+                        
+                        <div class="tool-card">
+                            <h3>📊 Calculadora de Complexidade</h3>
+                            <p>Avalie a complexidade cognitiva de suas atividades</p>
+                            
+                            <div class="complexity-levels">
+                                <div class="complexity-item" data-complexity="1">
+                                    <span class="complexity-color" style="background: #3498db"></span>
+                                    <span>Recordar (1)</span>
+                                </div>
+                                <div class="complexity-item" data-complexity="2">
+                                    <span class="complexity-color" style="background: #27ae60"></span>
+                                    <span>Compreender (2)</span>
+                                </div>
+                                <div class="complexity-item" data-complexity="3">
+                                    <span class="complexity-color" style="background: #e67e22"></span>
+                                    <span>Aplicar (3)</span>
+                                </div>
+                                <div class="complexity-item" data-complexity="4">
+                                    <span class="complexity-color" style="background: #f1c40f"></span>
+                                    <span>Analisar (4)</span>
+                                </div>
+                                <div class="complexity-item" data-complexity="5">
+                                    <span class="complexity-color" style="background: #e74c3c"></span>
+                                    <span>Avaliar (5)</span>
+                                </div>
+                                <div class="complexity-item" data-complexity="6">
+                                    <span class="complexity-color" style="background: #9b59b6"></span>
+                                    <span>Criar (6)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="complexity-result" id="complexityResult">
+                                <p>Selecione os níveis cognitivos envolvidos em sua atividade</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History Tab -->
+                <div class="tab-content" id="history">
+                    <h2>História da Taxonomia</h2>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-marker">1956</div>
+                            <div class="timeline-content">
+                                <h3>Taxonomia Original de Bloom</h3>
+                                <p>Benjamin Bloom e colaboradores desenvolvem a taxonomia original com 6 níveis hierárquicos</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-marker">2001</div>
+                            <div class="timeline-content">
+                                <h3>Taxonomia Revisada</h3>
+                                <p>Anderson e Krathwohl revisam a taxonomia, criando estrutura bidimensional</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-marker">2008</div>
+                            <div class="timeline-content">
+                                <h3>Taxonomia Digital</h3>
+                                <p>Andrew Churches adapta a taxonomia para ambientes digitais e tecnológicos</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-marker">2020</div>
+                            <div class="timeline-content">
+                                <h3>Era da IA</h3>
+                                <p>Integração com modelos de linguagem e personalização educacional</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Badges Display -->
+        <div class="badges-container" id="badgesContainer">
+            <h3>🏆 Suas Conquistas</h3>
+            <div class="badges-grid" id="badgesGrid">
+                <!-- Badges will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Achievement Modal -->
+        <div class="modal hidden" id="achievementModal">
+            <div class="modal-content">
+                <div class="achievement-celebration">
+                    <div class="confetti"></div>
+                    <h2>🎉 Parabéns!</h2>
+                    <div class="achievement-details" id="achievementDetails"></div>
+                    <button class="btn btn--primary" id="closeAchievement">Continuar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
