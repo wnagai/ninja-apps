@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventário de Conceitos Scrum - ICS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Tela de Início -->
+        <div id="inicio-area">
+            <h1>🎯 Inventário de Conceitos Scrum</h1>
+            <p class="subtitle">ICS - Avaliação baseada na Taxonomia de Bloom</p>
+            
+            <div class="welcome-card">
+                <h3>Bem-vindo ao Inventário Interativo!</h3>
+                <p>Avalie seus conhecimentos em Scrum através de 25 questões classificadas pela Taxonomia de Bloom. Raspe as alternativas para descobrir a resposta correta!</p>
+                
+                <div class="nome-input-group">
+                    <label for="nome-usuario">👤 Digite seu nome (ou apelido):</label>
+                    <input type="text" id="nome-usuario" placeholder="Seu nome aqui..." maxlength="30" />
+                </div>
+                
+                <button id="btn-iniciar">🚀 Iniciar Inventário</button>
+                
+                <div id="historico-resultados" style="display: none;">
+                    <h4>📊 Seus Resultados Anteriores</h4>
+                    <div id="lista-resultados"></div>
+                    <button id="btn-limpar-historico" class="btn-secondary">🗑️ Limpar Histórico</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Área do Quiz -->
+        <header id="quiz-header" style="display: none;">
+            <h1>Inventário de Conceitos Scrum - ICS</h1>
+            <p class="subtitle">Avaliação baseada na Taxonomia de Bloom</p>
+            <div class="usuario-info" id="usuario-display"></div>
+        </header>
+        
+        <main>
+            <div id="quiz-area" style="display: none;">
+                <div id="pergunta-container">
+                    <p id="numero-questao"></p>
+                    <p id="conceito-questao"></p>
+                    <h2 id="pergunta-texto">Carregando pergunta...</h2>
+                </div>
+                
+                <div id="bloom-info">
+                    <div class="bloom-nivel" id="bloom-nivel"></div>
+                    <div class="bloom-justificativa" id="bloom-justificativa"></div>
+                </div>
+                
+                <div id="alternativas-area"></div>
+                
+                <div id="feedback-area">
+                    <p id="feedback-usuario"></p>
+                </div>
+                <button id="btn-proxima" style="display: none;">Próxima Questão</button>
+            </div>
+            
+            <div id="resultado-final-area" style="display: none;">
+                <h2>🎉 Inventário Finalizado!</h2>
+                
+                <div id="mensagem-motivacional"></div>
+                
+                <p id="pontuacao-final"></p>
+                
+                <div id="estatisticas">
+                    <div class="stat-card">
+                        <div class="stat-title">Acertos na 1ª tentativa</div>
+                        <div class="stat-value" id="acertos-primeira"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Conceito mais forte</div>
+                        <div class="stat-value" id="conceito-forte"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Nível Bloom predominante</div>
+                        <div class="stat-value" id="bloom-predominante"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Tempo total</div>
+                        <div class="stat-value" id="tempo-total"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Eficiência de pontos</div>
+                        <div class="stat-value" id="eficiencia-pontos"></div>
+                    </div>
+                </div>
+
+                <!-- Dashboard de Conceitos -->
+                <div id="dashboard-conceitos">
+                    <h3>📊 Dashboard por Conceito</h3>
+                    <div class="resumo-container">
+                        <div class="resumo-header">📈 Resumo de Pontuação por Conceito</div>
+                        <div id="resumo-conceitos"></div>
+                    </div>
+                    <div id="conceitos-lista"></div>
+                </div>
+                
+                <div class="storage-status" id="storage-status">
+                    ✅ Resultado salvo no armazenamento local!
+                </div>
+                
+                <div class="botoes-finais">
+                    <button id="btn-reiniciar">🔄 Reiniciar Inventário</button>
+                    <button id="btn-novo-usuario" class="btn-secondary">👤 Trocar Usuário</button>
+                    <button id="btn-ver-historico" class="btn-secondary">📊 Ver Histórico</button>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2025 Inventário de Conceitos Scrum (ICS) - Baseado no Scrum Guide 2020</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
