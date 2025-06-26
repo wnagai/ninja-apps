@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIAS - Guia Prático para Professores</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --secondary: #e0e7ff;
+      --accent: #06b6d4;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --radius: 12px;
+      --radius-lg: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, var(--bg-main) 0%, var(--secondary) 100%);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      background: var(--bg-card);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-item {
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .main-content {
+      padding: 40px 0;
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: 1px solid var(--border);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: var(--secondary);
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .levels-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .level-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      border: 2px solid var(--border);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .level-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .level-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .level-card:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .level-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .level-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .level-description {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .level-example {
+      background: var(--secondary);
+      padding: 12px;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    .simulator {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin: 24px 0;
+      box-shadow: var(--shadow);
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+      background: white;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-light);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+      color: var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .alert {
+      padding: 16px;
+      border-radius: var(--radius);
+      margin: 16px 0;
+      border-left: 4px solid;
+    }
+
+    .alert-success {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: var(--success);
+      color: #065f46;
+    }
+
+    .alert-warning {
+      background: rgba(245, 158, 11, 0.1);
+      border-color: var(--warning);
+      color: #92400e;
+    }
+
+    .alert-danger {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: var(--danger);
+      color: #991b1b;
+    }
+
+    .quiz-question {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .quiz-options {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .quiz-option {
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: white;
+    }
+
+    .quiz-option:hover {
+      border-color: var(--primary);
+      background: var(--secondary);
+    }
+
+    .quiz-option.selected {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: white;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+      transition: width 0.3s ease;
+    }
+
+    .result-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-top: 24px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .result-score {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 24px;
+      gap: 8px;
+    }
+
+    .tab {
+      padding: 12px 24px;
+      border-radius: var(--radius) var(--radius) 0 0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: transparent;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .tab.active {
+      background: var(--primary);
+      color: white;
+      border-bottom: 2px solid var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .guidelines-output {
+      background: var(--secondary);
+      padding: 20px;
+      border-radius: var(--radius);
+      margin-top: 16px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .copy-btn {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      padding: 8px 16px;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .levels-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-menu {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .header-content {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          🤖 AIAS - Guia Prático
+        </div>
+        <nav class="nav-menu">
+          <div class="nav-item active" data-section="overview">Visão Geral</div>
+          <div class="nav-item" data-section="levels">Níveis</div>
+          <div class="nav-item" data-section="simulator">Simulador</div>
+          <div class="nav-item" data-section="quiz">Quiz</div>
+          <div class="nav-item" data-section="generator">Gerador</div>
+          <div class="nav-item" data-section="limitations">Limitações</div>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    <!-- Seção: Visão Geral -->
+    <section class="section active" id="overview">
+      <div class="hero">
+        <h1>AI Assessment Scale</h1>
+        <p>Um guia prático para professores universitários entenderem e aplicarem a AIAS de forma efetiva em suas disciplinas</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">📚</div>
+          <h2 class="card-title">O Que É a AIAS?</h2>
+        </div>
+        <p>A <strong>AI Assessment Scale</strong> é um framework de 5 níveis que ajuda educadores a definir claramente como e quando estudantes podem usar ferramentas de Inteligência Artificial em suas avaliações.</p>
+        <br>
+        <p><strong>Objetivo:</strong> Em vez de proibir completamente a IA, criar transparência e diretrizes claras para seu uso ético e educativo.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🎯</div>
+          <h2 class="card-title">Por Que Usar?</h2>
+        </div>
+        <ul style="list-style-type: none; padding: 0;">
+          <li style="margin-bottom: 12px;">✅ <strong>Transparência:</strong> Estudantes sabem exatamente o que podem fazer</li>
+          <li style="margin-bottom: 12px;">✅ <strong>Flexibilidade:</strong> Adapta-se a diferentes tipos de avaliação</li>
+          <li style="margin-bottom: 12px;">✅ <strong>Preparação:</strong> Prepara alunos para o mercado de trabalho</li>
+          <li style="margin-bottom: 12px;">✅ <strong>Integridade:</strong> Reduz casos de uso inadequado de IA</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Seção: Níveis -->
+    <section class="section" id="levels">
+      <h2 style="text-align: center; margin-bottom: 40px; font-size: 2.5rem; color: var(--primary);">Os 5 Níveis da AIAS</h2>
+      
+      <div class="levels-grid">
+        <div class="level-card" data-level="1">
+          <div class="level-number">1</div>
+          <h3 class="level-title">Sem IA</h3>
+          <p class="level-description">Avaliação completamente sem assistência de IA. Ambiente controlado.</p>
+          <div class="level-example">
+            <strong>Exemplo:</strong> Prova presencial tradicional, apresentação oral ao vivo
+          </div>
+        </div>
+
+        <div class="level-card" data-level="2">
+          <div class="level-number">2</div>
+          <h3 class="level-title">IA para Ideação</h3>
+          <p class="level-description">IA permitida apenas para brainstorming e estruturação inicial.</p>
+          <div class="level-example">
+            <strong>Exemplo:</strong> Usar ChatGPT para mapear tópicos de pesquisa, mas escrever ensaio independentemente
+          </div>
+        </div>
+
+        <div class="level-card" data-level="3">
+          <div class="level-number">3</div>
+          <h3 class="level-title">IA para Edição</h3>
+          <p class="level-description">IA pode melhorar clareza e qualidade, mas não criar conteúdo novo.</p>
+          <div class="level-example">
+            <strong>Exemplo:</strong> Usar Grammarly avançado para melhorar redação já escrita
+          </div>
+        </div>
+
+        <div class="level-card" data-level="4">
+          <div class="level-number">4</div>
+          <h3 class="level-title">IA com Análise Crítica</h3>
+          <p class="level-description">IA realiza tarefas específicas, mas estudante deve analisar criticamente.</p>
+          <div class="level-example">
+            <strong>Exemplo:</strong> IA gera análise de dados, aluno avalia limitações e vieses
+          </div>
+        </div>
+
+        <div class="level-card" data-level="5">
+          <div class="level-number">5</div>
+          <h3 class="level-title">IA Total (Co-piloto)</h3>
+          <p class="level-description">Uso livre de IA como parceira de trabalho.</p>
+          <div class="level-example">
+            <strong>Exemplo:</strong> Projeto colaborativo humano-IA simulando ambiente profissional real
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção: Simulador -->
+    <section class="section" id="simulator">
+      <h2 style="text-align: center; margin-bottom: 40px; font-size: 2.5rem; color: var(--primary);">Simulador de Avaliação</h2>
+      
+      <div class="simulator">
+        <h3 style="margin-bottom: 24px;">🧪 Teste Diferentes Cenários</h3>
+        
+        <div class="form-group">
+          <label class="form-label">Tipo de Disciplina:</label>
+          <select class="form-select" id="disciplina">
+            <option value="">Selecione...</option>
+            <option value="humanas">Ciências Humanas</option>
+            <option value="exatas">Ciências Exatas</option>
+            <option value="biologicas">Ciências Biológicas</option>
+            <option value="engenharia">Engenharia</option>
+            <option value="administracao">Administração</option>
+            <option value="direito">Direito</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Tipo de Avaliação:</label>
+          <select class="form-select" id="tipoAvaliacao">
+            <option value="">Selecione...</option>
+            <option value="ensaio">Ensaio/Redação</option>
+            <option value="projeto">Projeto Prático</option>
+            <option value="analise">Análise de Caso</option>
+            <option value="pesquisa">Pesquisa Acadêmica</option>
+            <option value="apresentacao">Apresentação</option>
+            <option value="prova">Prova Objetiva</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Objetivo Principal:</label>
+          <select class="form-select" id="objetivo">
+            <option value="">Selecione...</option>
+            <option value="conhecimento">Testar conhecimento básico</option>
+            <option value="aplicacao">Aplicar conceitos</option>
+            <option value="analise">Análise crítica</option>
+            <option value="sintese">Síntese e criação</option>
+            <option value="avaliacao">Avaliação e julgamento</option>
+          </select>
+        </div>
+
+        <button class="btn btn-primary" onclick="gerarRecomendacao()">
+          🔍 Gerar Recomendação AIAS
+        </button>
+
+        <div id="recomendacaoResult" style="margin-top: 24px;"></div>
+      </div>
+    </section>
+
+    <!-- Seção: Quiz -->
+    <section class="section" id="quiz">
+      <h2 style="text-align: center; margin-bottom: 40px; font-size: 2.5rem; color: var(--primary);">Quiz de Conhecimento</h2>
+      
+      <div class="progress-bar">
+        <div class="progress-fill" id="quizProgress" style="width: 0%;"></div>
+      </div>
+
+      <div id="quizContainer">
+        <!-- Quiz será gerado dinamicamente -->
+      </div>
+
+      <div class="result-card" id="quizResult" style="display: none;">
+        <div class="result-score" id="quizScore"></div>
+        <p id="quizFeedback"></p>
+        <button class="btn btn-primary" onclick="reiniciarQuiz()">🔄 Fazer Quiz Novamente</button>
+      </div>
+    </section>
+
+    <!-- Seção: Gerador -->
+    <section class="section" id="generator">
+      <h2 style="text-align: center; margin-bottom: 40px; font-size: 2.5rem; color: var(--primary);">Gerador de Diretrizes</h2>
+      
+      <div class="card">
+        <h3 style="margin-bottom: 24px;">📝 Crie Diretrizes Personalizadas para Suas Avaliações</h3>
+        
+        <div class="tabs">
+          <button class="tab active" onclick="switchTab('basico')">Básico</button>
+          <button class="tab" onclick="switchTab('avancado')">Avançado</button>
+        </div>
+
+        <div class="tab-content active" id="basico">
+          <div class="form-group">
+            <label class="form-label">Nome da Disciplina:</label>
+            <input type="text" class="form-input" id="nomeDisciplina" placeholder="Ex: Metodologia de Pesquisa">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Tipo de Atividade:</label>
+            <input type="text" class="form-input" id="tipoAtividade" placeholder="Ex: Ensaio argumentativo">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nível AIAS Desejado:</label>
+            <select class="form-select" id="nivelAias">
+              <option value="1">Nível 1 - Sem IA</option>
+              <option value="2">Nível 2 - IA para Ideação</option>
+              <option value="3">Nível 3 - IA para Edição</option>
+              <option value="4">Nível 4 - IA com Análise Crítica</option>
+              <option value="5">Nível 5 - IA Total</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="tab-content" id="avancado">
+          <div class="form-group">
+            <label class="form-label">Competências a Avaliar:</label>
+            <textarea class="form-textarea" id="competencias" placeholder="Ex: Pensamento crítico, análise de fontes, argumentação..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Ferramentas IA Específicas:</label>
+            <input type="text" class="form-input" id="ferramentasIA" placeholder="Ex: ChatGPT, Grammarly, DeepL...">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Restrições Especiais:</label>
+            <textarea class="form-textarea" id="restricoes" placeholder="Ex: Não usar IA para análise de dados estatísticos..."></textarea>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="gerarDiretrizes()">
+          ⚡ Gerar Diretrizes
+        </button>
+
+        <div id="directrizesOutput" class="guidelines-output" style="display: none;">
+          <h4>📋 Suas Diretrizes Personalizadas:</h4>
+          <div id="directrizesText"></div>
+          <button class="btn btn-secondary copy-btn" onclick="copiarDiretrizes()">
+            📋 Copiar Texto
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção: Limitações -->
+    <section class="section" id="limitations">
+      <h2 style="text-align: center; margin-bottom: 40px; font-size: 2.5rem; color: var(--primary);">Limitações e Considerações</h2>
+      
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">⚠️</div>
+          <h2 class="card-title">Desafios Práticos</h2>
+        </div>
+        <ul style="list-style-type: none; padding: 0;">
+          <li style="margin-bottom: 16px;">
+            <strong>🔍 Detecção:</strong> É muito difícil detectar uso não autorizado de IA em trabalhos remotos
+          </li>
+          <li style="margin-bottom: 16px;">
+            <strong>⚖️ Equidade:</strong> Nem todos os estudantes têm acesso às mesmas ferramentas de IA
+          </li>
+          <li style="margin-bottom: 16px;">
+            <strong>📚 Adaptação:</strong> Requer reformulação significativa de avaliações existentes
+          </li>
+          <li style="margin-bottom: 16px;">
+            <strong>🧠 Resistência:</strong> Alguns educadores podem resistir à mudança
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🤔</div>
+          <h2 class="card-title">Questões Éticas</h2>
+        </div>
+        <div class="alert alert-warning">
+          <strong>Atenção:</strong> A AIAS não resolve automaticamente questões de integridade acadêmica. É uma ferramenta que deve ser acompanhada de políticas institucionais claras e diálogo contínuo com estudantes.
+        </div>
+        <ul style="list-style-type: none; padding: 0; margin-top: 16px;">
+          <li style="margin-bottom: 12px;">• Como garantir que o aprendizado real está acontecendo?</li>
+          <li style="margin-bottom: 12px;">• Qual o limite entre assistência e dependência?</li>
+          <li style="margin-bottom: 12px;">• Como preparar estudantes sem torná-los passivos?</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">💡</div>
+          <h2 class="card-title">Recomendações Práticas</h2>
+        </div>
+        <div class="alert alert-success">
+          <strong>Dica:</strong> Comece com projetos piloto em pequena escala antes de implementar institucionalmente.
+        </div>
+        <ol style="margin-top: 16px;">
+          <li style="margin-bottom: 12px;"><strong>Comunique claramente</strong> as expectativas para cada avaliação</li>
+          <li style="margin-bottom: 12px;"><strong>Treine estudantes</strong> sobre uso ético de IA</li>
+          <li style="margin-bottom: 12px;"><strong>Monitore e ajuste</strong> baseado em feedback</li>
+          <li style="margin-bottom: 12px;"><strong>Mantenha flexibilidade</strong> para adaptações futuras</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // =======================
+    // SISTEMA DE NAVEGAÇÃO
+    // =======================
+    
+    function initNavigation() {
+      const navItems = document.querySelectorAll('.nav-item');
+      const sections = document.querySelectorAll('.section');
+      
+      navItems.forEach(item => {
+        item.addEventListener('click', () => {
+          // Remove classe active de todos os itens
+          navItems.forEach(nav => nav.classList.remove('active'));
+          sections.forEach(section => section.classList.remove('active'));
+          
+          // Adiciona classe active ao item clicado
+          item.classList.add('active');
+          
+          // Mostra seção correspondente
+          const targetSection = item.getAttribute('data-section');
+          document.getElementById(targetSection).classList.add('active');
+        });
+      });
+    }
+
+    // =======================
+    // SIMULADOR DE RECOMENDAÇÃO
+    // =======================
+    
+    function gerarRecomendacao() {
+      const disciplina = document.getElementById('disciplina').value;
+      const tipoAvaliacao = document.getElementById('tipoAvaliacao').value;
+      const objetivo = document.getElementById('objetivo').value;
+      
+      if (!disciplina || !tipoAvaliacao || !objetivo) {
+        mostrarAlerta('Por favor, preencha todos os campos!', 'warning');
+        return;
+      }
+      
+      const recomendacao = calcularRecomendacao(disciplina, tipoAvaliacao, objetivo);
+      mostrarResultadoRecomendacao(recomendacao);
+    }
+    
+    function calcularRecomendacao(disciplina, tipoAvaliacao, objetivo) {
+      // Lógica simplificada para demonstração
+      let nivel = 1;
+      let justificativa = '';
+      let exemplos = [];
+      
+      // Análise baseada no tipo de avaliação
+      if (tipoAvaliacao === 'prova') {
+        nivel = 1;
+        justificativa = 'Provas objetivas geralmente requerem conhecimento direto sem assistência.';
+        exemplos = ['Exame presencial', 'Quiz online com tempo limitado'];
+      } else if (tipoAvaliacao === 'ensaio') {
+        if (objetivo === 'conhecimento') {
+          nivel = 2;
+          justificativa = 'Permite pesquisa inicial com IA, mas exige desenvolvimento próprio.';
+        } else if (objetivo === 'analise' || objetivo === 'sintese') {
+          nivel = 3;
+          justificativa = 'IA pode ajudar na estruturação e revisão, mantendo autoria.';
+        }
+        exemplos = ['Ensaio argumentativo', 'Resenha crítica'];
+      } else if (tipoAvaliacao === 'projeto') {
+        if (disciplina === 'engenharia' || disciplina === 'administracao') {
+          nivel = 4;
+          justificativa = 'Projetos práticos podem simular ambiente profissional com IA.';
+        } else {
+          nivel = 3;
+          justificativa = 'Permite uso moderado de IA mantendo controle criativo.';
+        }
+        exemplos = ['Projeto de desenvolvimento', 'Plano de negócios'];
+      } else if (tipoAvaliacao === 'pesquisa') {
+        nivel = 4;
+        justificativa = 'Pesquisa avançada pode usar IA com análise crítica obrigatória.';
+        exemplos = ['Artigo científico', 'Relatório de pesquisa'];
+      }
+      
+      return {
+        nivel: nivel,
+        justificativa: justificativa,
+        exemplos: exemplos,
+        disciplina: disciplina,
+        tipoAvaliacao: tipoAvaliacao
+      };
+    }
+    
+    function mostrarResultadoRecomendacao(rec) {
+      const container = document.getElementById('recomendacaoResult');
+      const nivelDescricoes = {
+        1: 'Sem IA',
+        2: 'IA para Ideação',
+        3: 'IA para Edição',
+        4: 'IA com Análise Crítica',
+        5: 'IA Total'
+      };
+      
+      container.innerHTML = `
+        <div class="alert alert-success">
+          <h4>🎯 Recomendação: Nível ${rec.nivel} - ${nivelDescricoes[rec.nivel]}</h4>
+          <p><strong>Justificativa:</strong> ${rec.justificativa}</p>
+          <p><strong>Exemplos:</strong> ${rec.exemplos.join(', ')}</p>
+          <div style="margin-top: 16px;">
+            <strong>Diretrizes sugeridas:</strong>
+            <ul style="margin-top: 8px;">
+              ${gerarDiretrizesNivel(rec.nivel).map(d => `<li>${d}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+    
+    function gerarDiretrizesNivel(nivel) {
+      const diretrizes = {
+        1: [
+          'Ambiente controlado sem acesso à internet',
+          'Apenas conhecimento prévio e materiais fornecidos',
+          'Declaração de não uso de IA obrigatória'
+        ],
+        2: [
+          'IA permitida apenas na fase de pesquisa inicial',
+          'Submissão final deve ser 100% autoral',
+          'Citar fontes de pesquisa, incluindo prompts de IA usados'
+        ],
+        3: [
+          'IA pode ser usada para melhorar clareza e gramática',
+          'Conteúdo principal deve ser criado pelo estudante',
+          'Anexar versão original antes da edição por IA'
+        ],
+        4: [
+          'IA pode completar tarefas específicas indicadas',
+          'Análise crítica do output da IA é obrigatória',
+          'Citar todo conteúdo gerado por IA',
+          'Explicar limitações e vieses identificados'
+        ],
+        5: [
+          'Uso livre de IA como ferramenta colaborativa',
+          'Foco na estratégia e direcionamento da IA',
+          'Demonstrar compreensão do processo e resultados',
+          'Reflexão sobre aprendizados da colaboração humano-IA'
+        ]
+      };
+      
+      return diretrizes[nivel] || [];
+    }
+
+    // =======================
+    // SISTEMA DE QUIZ
+    // =======================
+    
+    const perguntasQuiz = [
+      {
+        pergunta: "Em qual nível da AIAS é apropriado permitir que IA complete uma análise de dados, desde que o estudante avalie criticamente os resultados?",
+        opcoes: ["Nível 1", "Nível 2", "Nível 4", "Nível 5"],
+        resposta: 2,
+        explicacao: "Nível 4 permite que IA complete tarefas específicas, mas exige análise crítica do estudante."
+      },
+      {
+        pergunta: "Para uma prova presencial tradicional, qual nível AIAS é mais apropriado?",
+        opcoes: ["Nível 1", "Nível 2", "Nível 3", "Nível 4"],
+        resposta: 0,
+        explicacao: "Nível 1 é para avaliações completamente sem IA, como provas presenciais."
+      },
+      {
+        pergunta: "Um estudante pode usar IA para brainstorming inicial mas deve escrever o ensaio completamente sozinho. Qual nível?",
+        opcoes: ["Nível 1", "Nível 2", "Nível 3", "Nível 4"],
+        resposta: 1,
+        explicacao: "Nível 2 permite IA para ideação e estruturação, mas o conteúdo final deve ser autoral."
+      },
+      {
+        pergunta: "Qual é o principal objetivo da AIAS?",
+        opcoes: [
+          "Proibir completamente o uso de IA",
+          "Criar transparência sobre o uso de IA",
+          "Facilitar o trabalho dos professores",
+          "Reduzir a carga de trabalho dos alunos"
+        ],
+        resposta: 1,
+        explicacao: "A AIAS visa criar transparência e diretrizes claras, não proibir o uso de IA."
+      },
+      {
+        pergunta: "No Nível 5 da AIAS, é necessário especificar qual conteúdo foi gerado por IA?",
+        opcoes: ["Sim, sempre", "Não é necessário", "Apenas em trabalhos acadêmicos", "Depende da disciplina"],
+        resposta: 1,
+        explicacao: "No Nível 5, o uso de IA é livre e não requer especificação de conteúdo gerado."
+      }
+    ];
+    
+    let perguntaAtual = 0;
+    let respostasCorretas = 0;
+    let respostasUsuario = [];
+    
+    function iniciarQuiz() {
+      perguntaAtual = 0;
+      respostasCorretas = 0;
+      respostasUsuario = [];
+      mostrarPergunta();
+      document.getElementById('quizResult').style.display = 'none';
+    }
+    
+    function mostrarPergunta() {
+      const container = document.getElementById('quizContainer');
+      const pergunta = perguntasQuiz[perguntaAtual];
+      
+      container.innerHTML = `
+        <div class="quiz-question">
+          <h3>Pergunta ${perguntaAtual + 1} de ${perguntasQuiz.length}</h3>
+          <p style="font-size: 1.1rem; margin: 16px 0;">${pergunta.pergunta}</p>
+          <div class="quiz-options">
+            ${pergunta.opcoes.map((opcao, index) => `
+              <div class="quiz-option" data-opcao="${index}">${opcao}</div>
+            `).join('')}
+          </div>
+          <button class="btn btn-primary" id="proximaBtn" style="margin-top: 20px; display: none;" onclick="proximaPergunta()">
+            ${perguntaAtual === perguntasQuiz.length - 1 ? 'Finalizar Quiz' : 'Próxima Pergunta'}
+          </button>
+        </div>
+      `;
+      
+      // Adicionar event listeners para as opções
+      const opcoes = container.querySelectorAll('.quiz-option');
+      opcoes.forEach((opcao, index) => {
+        opcao.addEventListener('click', () => selecionarOpcao(index, opcoes));
+      });
+      
+      atualizarProgresso();
+    }
+    
+    function selecionarOpcao(index, opcoes) {
+      opcoes.forEach(opcao => opcao.classList.remove('selected'));
+      opcoes[index].classList.add('selected');
+      
+      respostasUsuario[perguntaAtual] = index;
+      document.getElementById('proximaBtn').style.display = 'block';
+    }
+    
+    function proximaPergunta() {
+      const pergunta = perguntasQuiz[perguntaAtual];
+      if (respostasUsuario[perguntaAtual] === pergunta.resposta) {
+        respostasCorretas++;
+      }
+      
+      perguntaAtual++;
+      
+      if (perguntaAtual < perguntasQuiz.length) {
+        mostrarPergunta();
+      } else {
+        mostrarResultadoQuiz();
+      }
+    }
+    
+    function mostrarResultadoQuiz() {
+      const container = document.getElementById('quizContainer');
+      container.style.display = 'none';
+      
+      const resultado = document.getElementById('quizResult');
+      const score = document.getElementById('quizScore');
+      const feedback = document.getElementById('quizFeedback');
+      
+      const percentual = Math.round((respostasCorretas / perguntasQuiz.length) * 100);
+      
+      score.textContent = `${respostasCorretas}/${perguntasQuiz.length} (${percentual}%)`;
+      
+      let mensagem = '';
+      if (percentual >= 80) {
+        mensagem = '🎉 Excelente! Você compreende bem os conceitos da AIAS.';
+        score.style.color = 'var(--success)';
+      } else if (percentual >= 60) {
+        mensagem = '👍 Bom trabalho! Revise alguns conceitos para dominar completamente a AIAS.';
+        score.style.color = 'var(--warning)';
+      } else {
+        mensagem = '📚 Recomendamos revisar o material sobre AIAS antes de implementar.';
+        score.style.color = 'var(--danger)';
+      }
+      
+      feedback.textContent = mensagem;
+      resultado.style.display = 'block';
+      
+      atualizarProgresso(100);
+    }
+    
+    function reiniciarQuiz() {
+      document.getElementById('quizContainer').style.display = 'block';
+      iniciarQuiz();
+    }
+    
+    function atualizarProgresso(valor = null) {
+      const progress = document.getElementById('quizProgress');
+      const percentual = valor !== null ? valor : ((perguntaAtual + 1) / perguntasQuiz.length) * 100;
+      progress.style.width = percentual + '%';
+    }
+
+    // =======================
+    // GERADOR DE DIRETRIZES
+    // =======================
+    
+    function switchTab(tabName) {
+      const tabs = document.querySelectorAll('.tab');
+      const contents = document.querySelectorAll('.tab-content');
+      
+      tabs.forEach(tab => tab.classList.remove('active'));
+      contents.forEach(content => content.classList.remove('active'));
+      
+      event.target.classList.add('active');
+      document.getElementById(tabName).classList.add('active');
+    }
+    
+    function gerarDiretrizes() {
+      const nomeDisciplina = document.getElementById('nomeDisciplina').value;
+      const tipoAtividade = document.getElementById('tipoAtividade').value;
+      const nivelAias = document.getElementById('nivelAias').value;
+      const competencias = document.getElementById('competencias').value;
+      const ferramentasIA = document.getElementById('ferramentasIA').value;
+      const restricoes = document.getElementById('restricoes').value;
+      
+      if (!nomeDisciplina || !tipoAtividade || !nivelAias) {
+        mostrarAlerta('Por favor, preencha pelo menos os campos básicos!', 'warning');
+        return;
+      }
+      
+      const diretrizes = criarDiretrizesPersonalizadas({
+        nomeDisciplina,
+        tipoAtividade,
+        nivelAias,
+        competencias,
+        ferramentasIA,
+        restricoes
+      });
+      
+      const outputDiv = document.getElementById('directrizesOutput');
+      const textDiv = document.getElementById('directrizesText');
+      
+      textDiv.innerHTML = diretrizes;
+      outputDiv.style.display = 'block';
+    }
+    
+    function criarDiretrizesPersonalizadas(dados) {
+      const nivelDescricoes = {
+        '1': 'Sem IA',
+        '2': 'IA para Ideação',
+        '3': 'IA para Edição',
+        '4': 'IA com Análise Crítica',
+        '5': 'IA Total'
+      };
+      
+      let html = `
+        <h4>📋 DIRETRIZES PARA USO DE IA</h4>
+        <p><strong>Disciplina:</strong> ${dados.nomeDisciplina}</p>
+        <p><strong>Atividade:</strong> ${dados.tipoAtividade}</p>
+        <p><strong>Nível AIAS:</strong> ${dados.nivelAias} - ${nivelDescricoes[dados.nivelAias]}</p>
+        <hr style="margin: 16px 0;">
+        
+        <h5>🎯 USO PERMITIDO DE IA:</h5>
+        <ul>
+      `;
+      
+      const diretrizesNivel = gerarDiretrizesNivel(parseInt(dados.nivelAias));
+      diretrizesNivel.forEach(diretriz => {
+        html += `<li>${diretriz}</li>`;
+      });
+      
+      html += '</ul>';
+      
+      if (dados.ferramentasIA) {
+        html += `
+          <h5>🛠️ FERRAMENTAS RECOMENDADAS:</h5>
+          <p>${dados.ferramentasIA}</p>
+        `;
+      }
+      
+      if (dados.competencias) {
+        html += `
+          <h5>🧠 COMPETÊNCIAS AVALIADAS:</h5>
+          <p>${dados.competencias}</p>
+        `;
+      }
+      
+      if (dados.restricoes) {
+        html += `
+          <h5>⚠️ RESTRIÇÕES ESPECÍFICAS:</h5>
+          <p>${dados.restricoes}</p>
+        `;
+      }
+      
+      html += `
+        <hr style="margin: 16px 0;">
+        <p><strong>⚡ IMPORTANTE:</strong> Qualquer uso de IA deve ser transparente e ético. Em caso de dúvidas, consulte o professor antes da submissão.</p>
+      `;
+      
+      return html;
+    }
+    
+    function copiarDiretrizes() {
+      const texto = document.getElementById('directrizesText').innerText;
+      navigator.clipboard.writeText(texto).then(() => {
+        mostrarAlerta('Diretrizes copiadas para a área de transferência!', 'success');
+      });
+    }
+
+    // =======================
+    // UTILIDADES
+    // =======================
+    
+    function mostrarAlerta(mensagem, tipo) {
+      const alerta = document.createElement('div');
+      alerta.className = `alert alert-${tipo}`;
+      alerta.textContent = mensagem;
+      alerta.style.position = 'fixed';
+      alerta.style.top = '20px';
+      alerta.style.right = '20px';
+      alerta.style.zIndex = '1000';
+      alerta.style.minWidth = '300px';
+      
+      document.body.appendChild(alerta);
+      
+      setTimeout(() => {
+        alerta.remove();
+      }, 3000);
+    }
+
+    // =======================
+    // INICIALIZAÇÃO
+    // =======================
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      initNavigation();
+      iniciarQuiz();
+      
+      // Adicionar interatividade aos cards de nível
+      const levelCards = document.querySelectorAll('.level-card');
+      levelCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const nivel = card.getAttribute('data-level');
+          mostrarDetalhesNivel(nivel);
+        });
+      });
+    });
+    
+    function mostrarDetalhesNivel(nivel) {
+      const detalhes = {
+        '1': {
+          titulo: 'Nível 1 - Sem IA',
+          descricao: 'Ambiente completamente controlado onde estudantes dependem exclusivamente de conhecimento próprio.',
+          usos: ['Provas presenciais', 'Apresentações ao vivo', 'Exercícios de memorização'],
+          naoUsos: ['Qualquer ferramenta digital', 'Acesso à internet', 'Calculadoras avançadas']
+        },
+        '2': {
+          titulo: 'Nível 2 - IA para Ideação',
+          descricao: 'IA permitida apenas para brainstorming e estruturação inicial, sem conteúdo na submissão final.',
+          usos: ['Mapas mentais com IA', 'Pesquisa de tópicos', 'Estruturação de ideias'],
+          naoUsos: ['Texto gerado por IA no trabalho final', 'Tradução automática', 'Correção por IA']
+        },
+        '3': {
+          titulo: 'Nível 3 - IA para Edição',
+          descricao: 'IA pode melhorar qualidade e clareza do trabalho criado pelo estudante.',
+          usos: ['Correção gramatical', 'Melhoria de estilo', 'Verificação de coerência'],
+          naoUsos: ['Criação de conteúdo novo', 'Geração de argumentos', 'Escrita automática']
+        },
+        '4': {
+          titulo: 'Nível 4 - IA com Análise Crítica',
+          descricao: 'IA completa tarefas específicas, mas estudante deve analisar criticamente os resultados.',
+          usos: ['IA gera análise de dados', 'Criação de gráficos', 'Tradução com revisão'],
+          naoUsos: ['Aceitar resultados sem análise', 'Uso não documentado', 'Cópia sem reflexão']
+        },
+        '5': {
+          titulo: 'Nível 5 - IA Total',
+          descricao: 'Uso livre de IA como parceira de trabalho, simulando ambiente profissional real.',
+          usos: ['Colaboração completa', 'Automação de tarefas', 'Co-criação de soluções'],
+          naoUsos: ['Passividade do estudante', 'Falta de compreensão', 'Ausência de direcionamento']
+        }
+      };
+      
+      const info = detalhes[nivel];
+      mostrarAlerta(`${info.titulo}: ${info.descricao}`, 'success');
+    }
+  </script>
+</body>
+</html>
