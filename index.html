@@ -5,292 +5,330 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ninja Apps - Hub de Aplicações</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 40px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
 
-        .container {
-            max-width: 1200px; 
-            width: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(10px);
-        }
+    .container {
+    max-width: 1200px; 
+    width: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    }
 
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+    .header {
+    text-align: center;
+    margin-bottom: 40px;
+    }
 
-        .header h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+    .header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    }
 
-        .header h1 span {
-            font-size: 3.5rem;
-            vertical-align: middle;
-        }
+    .header h1 span {
+    font-size: 3.5rem;
+    vertical-align: middle;
+    }
 
-        .header p {
-            color: #4a5568;
-            font-size: 1.1rem;
-        }
+    .header p {
+    color: #4a5568;
+    font-size: 1.1rem;
+    }
 
-        .app-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
+    .app-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    }
 
-        .app-card {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    .app-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        .card-content {
-            background: #fff;
-            border: 2px solid #e2e8f0;
-            border-radius: 15px;
-            padding: 25px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .app-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
-        }
+    .card-content {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 15px;
+    padding: 25px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    }
+    
+    .app-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
+    }
 
-        .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
+    .card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    }
 
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 10px;
-        }
+    .card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 10px;
+    }
 
-        .card-description {
-            font-size: 1rem;
-            color: #718096;
-            line-height: 1.6;
-            flex-grow: 1; 
-            margin-bottom: 20px;
-        }
+    .card-description {
+    font-size: 1rem;
+    color: #718096;
+    line-height: 1.6;
+    flex-grow: 1; 
+    margin-bottom: 20px;
+    }
 
-        .card-link {
-            font-weight: 600;
-            color: #667eea;
-            display: inline-block;
-            align-self: flex-start;
-        }
-        
-        .card-link span {
-            transition: transform 0.2s ease-in-out;
-            display: inline-block;
-        }
-        
-        .app-card:hover .card-link span {
-            transform: translateX(4px);
-        }
+    .card-link {
+    font-weight: 600;
+    color: #667eea;
+    display: inline-block;
+    align-self: flex-start;
+    }
+    
+    .card-link span {
+    transition: transform 0.2s ease-in-out;
+    display: inline-block;
+    }
+    
+    .app-card:hover .card-link span {
+    transform: translateX(4px);
+    }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 30px;
-                margin-top: 20px;
-                margin-bottom: 20px;
-            }
-            .header h1 {
-                font-size: 2.5rem;
-            }
-        }
+    /* Destaque especial para novos apps */
+    .card-new {
+    position: relative;
+    }
 
-        @media (max-width: 600px) {
-             .app-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+    .card-new::before {
+    content: "NOVO";
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 12px;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(238, 90, 36, 0.3);
+    }
+
+    .card-new:hover::before {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+    }
+
+    @media (max-width: 768px) {
+    .container {
+    padding: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    }
+    .header h1 {
+    font-size: 2.5rem;
+    }
+    }
+
+    @media (max-width: 600px) {
+    .app-grid {
+    grid-template-columns: 1fr;
+    }
+    }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <header class="header">
-            <h1><span>🥷</span> Ninja Apps</h1>
-            <p>Um hub central de aplicações e guias para equipes de desenvolvimento.</p>
-        </header>
+    <header class="header">
+    <h1><span>🥷</span> Ninja Apps</h1>
+    <p>Um hub central de aplicações e guias para equipes de desenvolvimento e educação.</p>
+    </header>
 
-        <main class="app-grid">
-            <a href="https://ikroqcyo.gensparkspace.com/" class="app-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-icon">💡</div>
-                    <h2 class="card-title">O Programador Pragmático</h2>
-                    <p class="card-description">
-                        Dicas práticas e conselhos para equipes de desenvolvimento de software que buscam aprimorar suas habilidades e processos.
-                    </p>
-                    <div class="card-link">Ler Dicas <span>→</span></div>
-                </div>
-            </a>
+    <main class="app-grid">
+    
+    <a href="https://ikroqcyo.gensparkspace.com/" class="app-card" target="_blank">
+    <div class="card-content">
+    <div class="card-icon">💡</div>
+    <h2 class="card-title">O Programador Pragmático</h2>
+    <p class="card-description">
+    Dicas práticas e conselhos para equipes de desenvolvimento de software que buscam aprimorar suas habilidades e processos.
+    </p>
+    <div class="card-link">Ler Dicas <span>→</span></div>
+    </div>
+    </a>
 
-            <a href="https://pvfmpodl.gensparkspace.com/" class="app-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-icon">🐙</div>
-                    <h2 class="card-title">Introdução ao GitHub</h2>
-                    <p class="card-description">
-                        Um guia essencial para desenvolvedores que estão começando a usar o GitHub para controle de versão e colaboração em projetos.
-                    </p>
-                    <div class="card-link">Acessar Guia <span>→</span></div>
-                </div>
-            </a>
+    <a href="https://pvfmpodl.gensparkspace.com/" class="app-card" target="_blank">
+    <div class="card-content">
+    <div class="card-icon">🐙</div>
+    <h2 class="card-title">Introdução ao GitHub</h2>
+    <p class="card-description">
+    Um guia essencial para desenvolvedores que estão começando a usar o GitHub para controle de versão e colaboração em projetos.
+    </p>
+    <div class="card-link">Acessar Guia <span>→</span></div>
+    </div>
+    </a>
 
-            <a href="https://ezypancp.gensparkspace.com/" class="app-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-icon">🛡️</div>
-                    <h2 class="card-title">LGPD e IA em Sistemas de Saúde</h2>
-                    <p class="card-description">
-                        Diretrizes para desenvolvimento seguro e proteção de dados em aplicações CRM médicas com IA generativa.
-                    </p>
-                    <div class="card-link">Ver Diretrizes <span>→</span></div>
-                </div>
-            </a>
+    <a href="https://ezypancp.gensparkspace.com/" class="app-card" target="_blank">
+    <div class="card-content">
+    <div class="card-icon">🛡️</div>
+    <h2 class="card-title">LGPD e IA em Sistemas de Saúde</h2>
+    <p class="card-description">
+    Diretrizes para desenvolvimento seguro e proteção de dados em aplicações CRM médicas com IA generativa.
+    </p>
+    <div class="card-link">Ver Diretrizes <span>→</span></div>
+    </div>
+    </a>
 
-             <a href="tutorial_scrum_guide_2020.pdf" class="app-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-icon">📜</div>
-                    <h2 class="card-title">Tutorial Scrum Guide 2020</h2>
-                    <p class="card-description">
-                        Um tutorial completo e prático baseado no guia oficial do Scrum 2020. Ideal para aprender e revisar os conceitos do framework.
-                    </p>
-                    <div class="card-link">Acessar Tutorial <span>→</span></div>
-                </div>
-            </a>
+    <a href="pdfs/tutorial_scrum_guide_2020.pdf" class="app-card" target="_blank">
+    <div class="card-content">
+    <div class="card-icon">📜</div>
+    <h2 class="card-title">Tutorial Scrum Guide 2020</h2>
+    <p class="card-description">
+    Um tutorial completo e prático baseado no guia oficial do Scrum 2020. Ideal para aprender e revisar os conceitos do framework.
+    </p>
+    <div class="card-link">Acessar Tutorial <span>→</span></div>
+    </div>
+    </a>
 
-             <a href="ics/index.html" class="app-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-icon">🎯</div>
-                    <h2 class="card-title">Inventário de Conceitos Scrum</h2>
-                    <p class="card-description">
-                        Avalie seus conhecimentos em Scrum com um inventário interativo baseado na Taxonomia de Bloom.
-                    </p>
-                    <div class="card-link">Iniciar Inventário <span>→</span></div>
-                </div>
-            </a>
-            
-            <a href="tutorial_kanban/index.html" class="app-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-icon">🚦</div>
-                    <h2 class="card-title">Guia Interativo do Kanban</h2>
-                    <p class="card-description">
-                       Um guia prático para aprender os princípios e práticas do Kanban, com quadros, métricas e exemplos visuais interativos.
-                    </p>
-                    <div class="card-link">Explorar Guia <span>→</span></div>
-                </div>
-            </a>
+    <a href="ics/index.html" class="app-card" target="_blank">
+    <div class="card-content">
+    <div class="card-icon">🎯</div>
+    <h2 class="card-title">Inventário de Conceitos Scrum</h2>
+    <p class="card-description">
+    Avalie seus conhecimentos em Scrum com um inventário interativo baseado na Taxonomia de Bloom.
+    </p>
+    <div class="card-link">Iniciar Inventário <span>→</span></div>
+    </div>
+    </a>
+    
+    <a href="tutorial_kanban/index.html" class="app-card" target="_blank">
+    <div class="card-content">
+    <div class="card-icon">🚦</div>
+    <h2 class="card-title">Guia Interativo do Kanban</h2>
+    <p class="card-description">
+    Um guia prático para aprender os princípios e práticas do Kanban, com quadros, métricas e exemplos visuais interativos.
+    </p>
+    <div class="card-link">Explorar Guia <span>→</span></div>
+    </div>
+    </a>
 
-            <a href="https://qkkuieuq.gensparkspace.com/" class="app-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-icon">💾⚡</div>
-                    <h2 class="card-title">Tutorial Completo do Supabase</h2>
-                    <p class="card-description">
-                        Aprenda a desenvolver aplicações com banco de dados, autenticação, APIs em tempo real e storage em uma plataforma open source.
-                    </p>
-                    <div class="card-link">Ver Tutorial <span>→</span></div>
-                </div>
-            </a>
-            
-            <a href="forma_devs.html" class="app-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-icon">👥</div>
-                    <h2 class="card-title">FormaDevs</h2>
-                    <p class="card-description">
-                        Sorteador inteligente para criar grupos de forma rápida e customizável. Perfeito para aulas, eventos e equipes.
-                    </p>
-                    <div class="card-link">Acessar Ferramenta <span>→</span></div>
-                </div>
-            </a>
+    <a href="https://qkkuieuq.gensparkspace.com/" class="app-card" target="_blank">
+    <div class="card-content">
+    <div class="card-icon">💾⚡</div>
+    <h2 class="card-title">Tutorial Completo do Supabase</h2>
+    <p class="card-description">
+    Aprenda a desenvolver aplicações com banco de dados, autenticação, APIs em tempo real e storage em uma plataforma open source.
+    </p>
+    <div class="card-link">Ver Tutorial <span>→</span></div>
+    </div>
+    </a>
+    
+    <a href="formadevs/index.html" class="app-card" target="_blank">
+    <div class="card-content">
+    <div class="card-icon">👥</div>
+    <h2 class="card-title">FormaDevs</h2>
+    <p class="card-description">
+    Sorteador inteligente para criar grupos de forma rápida e customizável. Perfeito para aulas, eventos e equipes.
+    </p>
+    <div class="card-link">Acessar Ferramenta <span>→</span></div>
+    </div>
+    </a>
 
-            <a href="taxonomia_bloom_visual/index.html" class="app-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-icon">🎓</div>
-                    <h2 class="card-title">Taxonomia de Bloom Interativa</h2>
-                    <p class="card-description">
-                       Uma jornada visual e interativa pelos níveis cognitivos de aprendizagem, com quiz, ferramentas e exemplos práticos.
-                    </p>
-                    <div class="card-link">Explorar Guia <span>→</span></div>
-                </div>
-            </a>
+    <a href="taxonomia_bloom_visual/index.html" class="app-card" target="_blank">
+    <div class="card-content">
+    <div class="card-icon">🎓</div>
+    <h2 class="card-title">Taxonomia de Bloom Interativa</h2>
+    <p class="card-description">
+    Uma jornada visual e interativa pelos níveis cognitivos de aprendizagem, com quiz, ferramentas e exemplos práticos.
+    </p>
+    <div class="card-link">Explorar Guia <span>→</span></div>
+    </div>
+    </a>
 
-            <a href="llm_gpu_selector.html" class="app-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-icon">🚀</div>
-                    <h2 class="card-title">Seletor LLM por Hardware</h2>
-                    <p class="card-description">
-                        Descubra quais modelos de linguagem (LLMs) são compatíveis com sua GPU NVIDIA ou Mac Apple Silicon.
-                    </p>
-                    <div class="card-link">Verificar Compatibilidade <span>→</span></div>
-                </div>
-            </a>
-            
-             <a href="https://wijduske.gensparkspace.com/" class="app-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-icon">📈</div>
-                    <h2 class="card-title">Guia de Prompts para Gestão Ágil</h2>
-                    <p class="card-description">
-                        Um guia prático com exemplos de prompts para ajudar equipes Scrum e Kanban a melhorar a gestão e o ritmo de desenvolvimento.
-                    </p>
-                    <div class="card-link">Consultar Guia <span>→</span></div>
-                </div>
-            </a>
+    <!-- NOVO: AI Assessment Scale -->
+    <a href="aias/index.html" class="app-card card-new" target="_blank">
+    <div class="card-content">
+    <div class="card-icon">🤖</div>
+    <h2 class="card-title">AI Assessment Scale - Guia Prático</h2>
+    <p class="card-description">
+    Ferramenta interativa para professores universitários compreenderem e aplicarem a AIAS. Inclui simulador, quiz e gerador de diretrizes.
+    </p>
+    <div class="card-link">Explorar Ferramenta <span>→</span></div>
+    </div>
+    </a>
 
-            <a href="https://jnemzvmb.gensparkspace.com/" class="app-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-icon">📚</div>
-                    <h2 class="card-title">Guia de Frameworks para LLMs</h2>
-                    <p class="card-description">
-                        Análise comparativa dos principais frameworks para LLMs, abordando integração, custos e portabilidade.
-                    </p>
-                    <div class="card-link">Consultar Guia <span>→</span></div>
-                </div>
-            </a>
+    <a href="llm_gpu_selector/index.html" class="app-card" target="_blank">
+    <div class="card-content">
+    <div class="card-icon">🚀</div>
+    <h2 class="card-title">Seletor LLM por Hardware</h2>
+    <p class="card-description">
+    Descubra quais modelos de linguagem (LLMs) são compatíveis com sua GPU NVIDIA ou Mac Apple Silicon.
+    </p>
+    <div class="card-link">Verificar Compatibilidade <span>→</span></div>
+    </div>
+    </a>
+    
+    <a href="https://wijduske.gensparkspace.com/" class="app-card" target="_blank">
+    <div class="card-content">
+    <div class="card-icon">📈</div>
+    <h2 class="card-title">Guia de Prompts para Gestão Ágil</h2>
+    <p class="card-description">
+    Um guia prático com exemplos de prompts para ajudar equipes Scrum e Kanban a melhorar a gestão e o ritmo de desenvolvimento.
+    </p>
+    <div class="card-link">Consultar Guia <span>→</span></div>
+    </div>
+    </a>
 
-            <a href="prompting-guide-llm/index.html" class="app-card" target="_blank">
-                <div class="card-content">
-                    <div class="card-icon">✍️</div>
-                    <h2 class="card-title">Técnicas de Prompting para LLMs</h2>
-                    <p class="card-description">
-                        Um guia completo com as principais técnicas para maximizar o desempenho de LLMs, incluindo um gerador de prompts e comparações.
-                    </p>
-                    <div class="card-link">Explorar Guia <span>→</span></div>
-                </div>
-            </a>
-            
-        </main>
+    <a href="https://jnemzvmb.gensparkspace.com/" class="app-card" target="_blank">
+    <div class="card-content">
+    <div class="card-icon">📚</div>
+    <h2 class="card-title">Guia de Frameworks para LLMs</h2>
+    <p class="card-description">
+    Análise comparativa dos principais frameworks para LLMs, abordando integração, custos e portabilidade.
+    </p>
+    <div class="card-link">Consultar Guia <span>→</span></div>
+    </div>
+    </a>
+
+    <a href="prompting-guide-llm/index.html" class="app-card" target="_blank">
+    <div class="card-content">
+    <div class="card-icon">✍️</div>
+    <h2 class="card-title">Técnicas de Prompting para LLMs</h2>
+    <p class="card-description">
+    Um guia completo com as principais técnicas para maximizar o desempenho de LLMs, incluindo um gerador de prompts e comparações.
+    </p>
+    <div class="card-link">Explorar Guia <span>→</span></div>
+    </div>
+    </a>
+    
+    </main>
     </div>
 
 </body>
