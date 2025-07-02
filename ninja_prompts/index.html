@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninja-prompts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '🥷';
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .info-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .info-section.warning {
+            background: rgba(251, 191, 36, 0.2);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .info-section.success {
+            background: rgba(72, 187, 120, 0.2);
+            border: 1px solid rgba(72, 187, 120, 0.3);
+        }
+
+        .btn-file {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 10px auto;
+            display: block;
+        }
+
+        .btn-file:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(240, 147, 251, 0.4);
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        code {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+
+        .carousel-container {
+            position: relative;
+            padding: 40px;
+        }
+
+        .prompt-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+            border-left: 5px solid #ff6b6b;
+        }
+
+        .prompt-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            flex: 1;
+        }
+
+        .card-title h2 {
+            color: #1a1a2e;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .badge.category {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        .badge.target {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+        }
+
+        .card-description {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .prompt-content {
+            background: #f8fafc;
+            border-left: 4px solid #ff6b6b;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            border: 1px solid #e2e8f0;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #e2e8f0, #cbd5e0);
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(45deg, #cbd5e0, #a0aec0);
+            transform: translateY(-2px);
+        }
+
+        .btn-like {
+            background: linear-gradient(45deg, #fed7d7, #feb2b2);
+            color: #e53e3e;
+        }
+
+        .btn-like:hover {
+            background: linear-gradient(45deg, #feb2b2, #fc8181);
+        }
+
+        .btn-like.liked {
+            background: linear-gradient(45deg, #e53e3e, #c53030);
+            color: white;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #16213e, #0f3460);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 26, 46, 0.4);
+        }
+
+        .nav-btn:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .prompt-counter {
+            text-align: center;
+            margin: 20px 0;
+            color: #4a5568;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #a0aec0;
+        }
+
+        .close:hover {
+            color: #4a5568;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(45deg, #48bb78, #38a169);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+            box-shadow: 0 5px 15px rgba(72, 187, 120, 0.4);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .error {
+            background: linear-gradient(45deg, #f56565, #e53e3e);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .carousel-container {
+                padding: 20px;
+            }
+
+            .prompt-card {
+                padding: 20px;
+            }
+
+            .card-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .navigation {
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+                flex: 1;
+                min-width: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Ninja-prompts</h1>
+            <p>Prompts especializados para dominar a arte da IA</p>
+            
+            <div id="load-info" class="info-section">
+                💡 Para usar dados personalizados, coloque os arquivos <code>prompts.json</code> e <code>likes.json</code> no mesmo diretório
+            </div>
+            
+            <div id="file-loader" style="display: none;">
+                <input type="file" id="file-input" accept=".json" style="display: none;">
+                <button class="btn-file" onclick="loadFromFile()">
+                    📁 Carregar prompts.json
+                </button>
+                <div class="instructions">
+                    <strong>Como usar:</strong><br>
+                    1. Clique no botão acima<br>
+                    2. Selecione seu arquivo <code>prompts.json</code><br>
+                    3. Os prompts serão carregados automaticamente
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-container">
+            <div class="prompt-counter">
+                <span id="current-prompt">-</span> de <span id="total-prompts">-</span>
+            </div>
+
+            <div id="prompt-container">
+                <div class="loading">
+                    🔄 Carregando prompts ninja...
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button class="nav-btn" id="first-btn" disabled>⏮️ Primeiro</button>
+                <button class="nav-btn" id="prev-btn" disabled>⬅️ Anterior</button>
+                <button class="nav-btn" id="next-btn" disabled>Próximo ➡️</button>
+                <button class="nav-btn" id="last-btn" disabled>Último ⏭️</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para licença -->
+    <div id="license-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>📄 Licença de Uso</h2>
+            <p><strong>Creative Commons Universal (CC0)</strong></p>
+            <p>Este prompt está licenciado sob Creative Commons Universal, sem restrições.</p>
+            <p>Você pode:</p>
+            <ul style="margin: 15px 0; padding-left: 20px;">
+                <li>Usar para qualquer finalidade, comercial ou não</li>
+                <li>Modificar e adaptar conforme necessário</li>
+                <li>Distribuir e compartilhar</li>
+                <li>Usar sem atribuição obrigatória</li>
+            </ul>
+            <p>Para mais informações sobre a licença CC0, visite: <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">creativecommons.org</a></p>
+        </div>
+    </div>
+
+    <!-- Toast para feedback -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // Estado da aplicação
+        let prompts = [];
+        let likes = {};
+        let currentIndex = 0;
+        let userLikes = new Set();
+
+        // Elementos DOM
+        const promptContainer = document.getElementById('prompt-container');
+        const currentPromptEl = document.getElementById('current-prompt');
+        const totalPromptsEl = document.getElementById('total-prompts');
+        const firstBtn = document.getElementById('first-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const lastBtn = document.getElementById('last-btn');
+        const modal = document.getElementById('license-modal');
+        const closeModal = document.getElementsByClassName('close')[0];
+        const toast = document.getElementById('toast');
+
+        // Dados de fallback caso os arquivos JSON não estejam disponíveis
+        const fallbackPrompts = [
+            {
+                id: 1,
+                title: "Gerador de Imagens Especializado",
+                description: "IA especializada em criar imagens de alta qualidade em diversos estilos visuais com processo estruturado de refinamento.",
+                category: "Geração de Imagens",
+                target: "Designers, Criadores de Conteúdo",
+                prompt: "Você é um modelo de IA especializado em gerar imagens de alta qualidade em diferentes estilos visuais (ultra-realista, cartoon, anime clássico, etc.) e para múltiplas finalidades (aviso, logotipo, banner, cartaz, edição de imagem estática). Siga rigorosamente as etapas abaixo:\n\n1. Identificação do Estilo e Finalidade:\n* Ao receber uma solicitação, identifique claramente o estilo visual desejado (ex: ultra-realista, cartoon, anime clássico, etc.) e o tipo de imagem (aviso, logotipo, banner, cartaz, edição de imagem estática).\n\n2. Coleta de Características Essenciais:\n* Verifique se a solicitação inclui as seguintes informações:\n- Tipo de imagem\n- Texto principal (se aplicável)\n- Elementos visuais (ícones, formas, cores predominantes, estilo gráfico)\n- Público-alvo visual\n- Proporção ou formato da imagem\n- Restrições de sensibilidade ou temas proibidos\n- Objetivo da imagem\n\n3. Perguntas Estratégicas:\n* Se alguma característica estiver ausente ou se for necessário para aprimorar a qualidade da imagem, faça até três perguntas ao usuário.\n* Utilize raciocínio estruturado (chain-of-thoughts, tree-of-thoughts, etc.) para escolher as perguntas com maior probabilidade de contribuir para a fidelidade, clareza e qualidade da imagem.\n\n4. Flexibilidade nas Respostas:\n* Mesmo que as respostas do usuário sejam vagas ou insuficientes, prossiga normalmente para a próxima etapa.\n\n5. Revisão e Confirmação do Prompt Final:\n* Antes de gerar a imagem, apresente ao usuário o prompt final revisado e aprimorado, destacando os detalhes incorporados e eventuais suposições feitas.\n* Pergunte explicitamente se pode prosseguir com a geração da imagem.\n\n6. Cancelamento e Nova Solicitação:\n* Se o usuário não aprovar o prompt final, cancele a solicitação atual e peça uma nova descrição ou instruções.\n\n**Importante**:\nSempre busque maximizar a clareza e a qualidade do prompt, utilizando perguntas estratégicas, revisão e confirmação antes da geração da imagem."
+            },
+            {
+                id: 2,
+                title: "Assistente de Programação Avançado",
+                description: "IA especializada em desenvolvimento de software com foco em boas práticas, debugging e otimização de código.",
+                category: "Programação",
+                target: "Desenvolvedores, Estudantes de TI",
+                prompt: "Você é um assistente de programação especializado em desenvolvimento de software de alta qualidade. Sua expertise abrange múltiplas linguagens e frameworks. Sempre priorize clareza, eficiência e manutenibilidade do código."
+            },
+            {
+                id: 3,
+                title: "Tutor Educacional Personalizado",
+                description: "IA especializada em ensino adaptativo que se ajusta ao estilo de aprendizagem e nível de conhecimento do estudante.",
+                category: "Educação",
+                target: "Estudantes, Educadores, Autodidatas",
+                prompt: "Você é um tutor educacional especializado em ensino personalizado e adaptativo. Sempre adapte sua abordagem às necessidades individuais do estudante."
+            }
+        ];
+
+        // Detectar se está rodando localmente
+        function isRunningLocally() {
+            return window.location.protocol === 'file:' || 
+                   window.location.hostname === 'localhost' || 
+                   window.location.hostname === '127.0.0.1' ||
+                   window.location.hostname === '';
+        }
+
+        // Função para carregar arquivo via input
+        function loadFromFile() {
+            const fileInput = document.getElementById('file-input');
+            fileInput.click();
+        }
+
+        // Função para processar arquivo carregado
+        function handleFileLoad(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const loadedPrompts = JSON.parse(e.target.result);
+                    prompts = loadedPrompts;
+                    
+                    // Inicializar likes para os novos prompts
+                    likes = {};
+                    prompts.forEach(prompt => {
+                        likes[prompt.id] = 0;
+                    });
+                    
+                    // Carregar likes salvos localmente
+                    loadLocalLikes();
+                    
+                    // Reinicializar interface
+                    init();
+                    showToast('Prompts carregados com sucesso! 🥷📚');
+                    
+                    // Esconder botão de carregar e mostrar sucesso
+                    document.getElementById('file-loader').style.display = 'none';
+                    document.getElementById('load-info').className = 'info-section success';
+                    document.getElementById('load-info').innerHTML = 
+                        '✅ Prompts personalizados carregados com sucesso!';
+                    
+                } catch (error) {
+                    console.error('Erro ao processar arquivo:', error);
+                    showToast('Erro ao processar arquivo JSON 😞');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Função para carregar dados dos arquivos JSON
+        async function loadData() {
+            try {
+                showLoading('Carregando prompts ninja...');
+                
+                // Verificar se está rodando localmente
+                const isLocal = isRunningLocally();
+                let usesFallback = false;
+                
+                // Carregar prompts
+                try {
+                    const promptsResponse = await fetch('prompts.json');
+                    if (!promptsResponse.ok) {
+                        throw new Error(`HTTP ${promptsResponse.status}`);
+                    }
+                    prompts = await promptsResponse.json();
+                    console.log('✅ Prompts carregados do arquivo JSON');
+                    
+                    document.getElementById('load-info').className = 'info-section success';
+                    document.getElementById('load-info').innerHTML = 
+                        '✅ Prompts carregados do arquivo <code>prompts.json</code>';
+                    
+                } catch (error) {
+                    console.log('⚠️ Erro ao carregar prompts.json:', error.message);
+                    prompts = fallbackPrompts;
+                    usesFallback = true;
+                    
+                    if (isLocal && window.location.protocol === 'file:') {
+                        document.getElementById('load-info').className = 'info-section warning';
+                        document.getElementById('load-info').innerHTML = 
+                            '⚠️ <strong>Executando via file://</strong> - Arquivos externos bloqueados pelo navegador<br>' +
+                            'Para carregar arquivos externos, use um servidor HTTP local ou carregue manualmente:';
+                        document.getElementById('file-loader').style.display = 'block';
+                    } else {
+                        document.getElementById('load-info').className = 'info-section warning';
+                        document.getElementById('load-info').innerHTML = 
+                            '⚠️ Arquivo <code>prompts.json</code> não encontrado - usando dados de demonstração';
+                    }
+                }
+                
+                // Carregar likes (com fallback se arquivo não existir)
+                try {
+                    if (!usesFallback) {
+                        const likesResponse = await fetch('likes.json');
+                        if (likesResponse.ok) {
+                            likes = await likesResponse.json();
+                            console.log('✅ Likes carregados do arquivo JSON');
+                        } else {
+                            throw new Error('Arquivo não encontrado');
+                        }
+                    } else {
+                        throw new Error('Usando dados de fallback');
+                    }
+                } catch (error) {
+                    console.log('⚠️ Arquivo de likes não encontrado, inicializando...');
+                    likes = {};
+                    // Inicializar likes zerados para todos os prompts
+                    prompts.forEach(prompt => {
+                        likes[prompt.id] = 0;
+                    });
+                }
+                
+                if (usesFallback) {
+                    showToast('Usando dados de demonstração 📚');
+                }
+                
+                // Inicializar aplicação
+                init();
+                
+            } catch (error) {
+                console.error('Erro crítico ao carregar dados:', error);
+                showError(`Erro crítico ao inicializar Ninja-prompts. Detalhes: ${error.message}`);
+            }
+        }
+
+        // Função para salvar likes (simulação - em produção seria uma API)
+        async function saveLikes() {
+            try {
+                // Em uma aplicação real, isso seria uma chamada para API
+                // Por enquanto, apenas salvamos em localStorage como backup
+                localStorage.setItem('ninja-prompts-likes', JSON.stringify(likes));
+                console.log('Likes salvos no localStorage:', likes);
+            } catch (error) {
+                console.error('Erro ao salvar likes:', error);
+                showToast('Erro ao salvar like 😞');
+            }
+        }
+
+        // Função para carregar likes do localStorage como backup
+        function loadLocalLikes() {
+            try {
+                const savedLikes = localStorage.getItem('ninja-prompts-likes');
+                if (savedLikes) {
+                    const localLikes = JSON.parse(savedLikes);
+                    // Mesclar likes locais com likes do arquivo
+                    Object.keys(localLikes).forEach(id => {
+                        if (likes[id] !== undefined) {
+                            likes[id] = Math.max(likes[id], localLikes[id]);
+                        }
+                    });
+                }
+            } catch (error) {
+                console.log('Erro ao carregar likes locais:', error);
+            }
+        }
+
+        // Mostrar loading
+        function showLoading(message) {
+            promptContainer.innerHTML = `<div class="loading">${message}</div>`;
+        }
+
+        // Mostrar erro
+        function showError(message) {
+            promptContainer.innerHTML = `<div class="error">${message}</div>`;
+        }
+
+        // Inicialização
+        function init() {
+            if (prompts.length === 0) {
+                showError('Nenhum prompt ninja encontrado!');
+                return;
+            }
+
+            // Carregar likes salvos localmente
+            loadLocalLikes();
+
+            totalPromptsEl.textContent = prompts.length;
+            currentIndex = 0;
+            renderCurrentPrompt();
+            updateNavigation();
+            
+            // Event listeners
+            firstBtn.addEventListener('click', () => goToPrompt(0));
+            prevBtn.addEventListener('click', () => goToPrompt(currentIndex - 1));
+            nextBtn.addEventListener('click', () => goToPrompt(currentIndex + 1));
+            lastBtn.addEventListener('click', () => goToPrompt(prompts.length - 1));
+            
+            closeModal.addEventListener('click', () => modal.style.display = 'none');
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // Adicionar navegação por teclado
+            document.addEventListener('keydown', (e) => {
+                switch(e.key) {
+                    case 'ArrowLeft':
+                        if (currentIndex > 0) goToPrompt(currentIndex - 1);
+                        break;
+                    case 'ArrowRight':
+                        if (currentIndex < prompts.length - 1) goToPrompt(currentIndex + 1);
+                        break;
+                    case 'Home':
+                        goToPrompt(0);
+                        break;
+                    case 'End':
+                        goToPrompt(prompts.length - 1);
+                        break;
+                }
+            });
+        }
+
+        // Navegar para prompt específico
+        function goToPrompt(index) {
+            if (index >= 0 && index < prompts.length) {
+                currentIndex = index;
+                renderCurrentPrompt();
+                updateNavigation();
+            }
+        }
+
+        // Renderizar prompt atual
+        function renderCurrentPrompt() {
+            const prompt = prompts[currentIndex];
+            const promptLikes = likes[prompt.id] || 0;
+            const isLikedByUser = userLikes.has(prompt.id);
+            
+            promptContainer.innerHTML = `
+                <div class="prompt-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h2>${prompt.title}</h2>
+                            <div class="card-meta">
+                                <span class="badge category">${prompt.category}</span>
+                                <span class="badge target">${prompt.target}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-description">
+                        ${prompt.description}
+                    </div>
+                    
+                    <div class="prompt-content">${prompt.prompt}</div>
+                    
+                    <div class="card-actions">
+                        <button class="btn btn-like ${isLikedByUser ? 'liked' : ''}" onclick="toggleLike(${prompt.id})">
+                            ${isLikedByUser ? '❤️' : '🤍'} ${promptLikes} likes
+                        </button>
+                        <button class="btn btn-primary" onclick="copyPrompt(${prompt.id})">
+                            📋 Copiar Prompt
+                        </button>
+                        <button class="btn btn-secondary" onclick="showLicense()">
+                            📄 Ver Licença
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            currentPromptEl.textContent = currentIndex + 1;
+        }
+
+        // Atualizar navegação
+        function updateNavigation() {
+            firstBtn.disabled = currentIndex === 0;
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === prompts.length - 1;
+            lastBtn.disabled = currentIndex === prompts.length - 1;
+        }
+
+        // Toggle like
+        async function toggleLike(promptId) {
+            const wasLiked = userLikes.has(promptId);
+            
+            if (wasLiked) {
+                userLikes.delete(promptId);
+                likes[promptId] = Math.max(0, (likes[promptId] || 0) - 1);
+                showToast('Like removido! 💔');
+            } else {
+                userLikes.add(promptId);
+                likes[promptId] = (likes[promptId] || 0) + 1;
+                showToast('Prompt curtido! ❤️');
+            }
+            
+            await saveLikes();
+            renderCurrentPrompt();
+        }
+
+        // Copiar prompt
+        function copyPrompt(promptId) {
+            const prompt = prompts.find(p => p.id === promptId);
+            navigator.clipboard.writeText(prompt.prompt).then(() => {
+                showToast('Prompt ninja copiado! 🥷📋');
+            }).catch(() => {
+                showToast('Erro ao copiar prompt 😞');
+            });
+        }
+
+        // Mostrar licença
+        function showLicense() {
+            modal.style.display = 'block';
+        }
+
+        // Mostrar toast
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Inicializar aplicação carregando dados
+        document.addEventListener('DOMContentLoaded', () => {
+            // Configurar input de arquivo
+            const fileInput = document.getElementById('file-input');
+            if (fileInput) {
+                fileInput.addEventListener('change', handleFileLoad);
+            }
+            
+            // Carregar dados
+            loadData();
+        });
+    </script>
+</body>
+</html>
