@@ -13,7 +13,7 @@ O **Ninja Apps** é uma coleção curada de aplicações web, guias interativos 
 
 ## 📱 Aplicações Disponíveis
 
-### 🤖 **AI Assessment Scale - Guia Prático** `NOVO`
+### 🤖 **AI Assessment Scale - Guia Prático**
 Ferramenta interativa para professores universitários compreenderem e aplicarem a AIAS (AI Assessment Scale). 
 
 **Funcionalidades:**
