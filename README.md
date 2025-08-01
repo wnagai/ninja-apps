@@ -4,7 +4,7 @@ Um hub central de aplicações e guias para equipes de desenvolvimento e educaç
 
 ## 🎯 Sobre o Projeto
 
-O **Ninja Apps** é uma coleção curada de aplicações web, guias interativos e ferramentas práticas desenvolvidas para atender às necessidades de:
+O **Ninja Apps** é uma coleção de aplicações web, guias interativos e ferramentas práticas desenvolvidas para atender às necessidades de:
 
 - **Desenvolvedores** em início de carreira ou experientes
 - **Educadores** universitários e profissionais de ensino
